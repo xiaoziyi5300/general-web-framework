@@ -1,0 +1,97 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <!-- web.xml中shiro的filter对应的bean -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!-- 管理器，必须设置 -->
+        <property name="securityManager" ref="securityManager" />
+        <!-- 拦截到，跳转到的地址,通过此地址去认证 -->
+        <property name="loginUrl" value="/user/login"/>
+        <!-- 通过unauthorizedUrl指定没有权限操作时跳转页面 -->
+        <property name="unauthorizedUrl" value="/refuse.jsp" />
+        <!-- 自定义filter，可用来更改默认的表单名称配置 -->
+        <property name="filters">
+            <map>
+                <!-- 将自定义 的FormAuthenticationFilter注入shiroFilter中 -->
+                <!--<entry key="authc" value-ref="formAuthenticationFilter" />-->
+            </map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 对静态资源设置匿名访问 -->
+                /img/** = anon
+                /js/** = anon
+                /css/** = anon
+                /login.jsp = anon
+                <!-- /** = authc 所有url都必须认证通过才可以访问 -->
+            </value>
+        </property>
+    </bean>
+
+    <!-- securityManager安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="customRealm" />
+        <!-- 注入缓存管理器 -->
+        <property name="cacheManager" ref="cacheManager" />
+        <!-- 注入session管理器 -->
+        <!-- <property name="sessionManager" ref="sessionManager" /> -->
+        <!-- 记住我 -->
+        <property name="rememberMeManager" ref="rememberMeManager" />
+    </bean>
+
+    <!-- 自定义realm -->
+    <bean id="customRealm" class="com.cn.authentication.CustomRealm">
+        <!-- 将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列 -->
+        <!-- <property name="credentialsMatcher" ref="credentialsMatcher" /> -->
+    </bean>
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!-- 凭证匹配器 -->
+    <bean id="credentialsMatcher"
+          class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <!-- 选用MD5散列算法 -->
+        <property name="hashAlgorithmName" value="md5" />
+        <!-- 进行一次加密 -->
+        <property name="hashIterations" value="1" />
+    </bean>
+    <!-- 自定义form认证过虑器 -->
+    <!-- 基于Form表单的身份验证过滤器，不配置将也会注册此过虑器，表单中的用户账号、密码及loginurl将采用默认值，建议配置 -->
+    <!-- 可通过此配置，判断验证码 -->
+    <!--<bean id="formAuthenticationFilter"
+          class="com.zhijianj.stucheck.shiro.CustomFormAuthenticationFilter ">
+        &lt;!&ndash; 表单中账号的input名称,默认为username &ndash;&gt;
+        <property name="usernameParam" value="username" />
+        &lt;!&ndash; 表单中密码的input名称,默认为password &ndash;&gt;
+        <property name="passwordParam" value="password" />
+        &lt;!&ndash; 记住我input的名称,默认为rememberMe &ndash;&gt;
+        <property name="rememberMeParam" value="rememberMe" />
+    </bean>-->
+    <!-- 会话管理器 -->
+    <bean id="sessionManager"
+          class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- session的失效时长，单位毫秒 -->
+        <property name="globalSessionTimeout" value="600000" />
+        <!-- 删除失效的session -->
+        <property name="deleteInvalidSessions" value="true" />
+    </bean>
+    <!-- 缓存管理器 -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <!--<property name="cacheManagerConfigFile" value="classpath:spring/shiro-ehcache.xml" />-->
+    </bean>
+    <!-- rememberMeManager管理器，写cookie，取出cookie生成用户信息 -->
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="rememberMeCookie" />
+    </bean>
+    <!-- 记住我cookie -->
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <!-- rememberMe是cookie的名字 -->
+        <constructor-arg value="rememberMe" />
+        <!-- 记住我cookie生效时间30天 -->
+        <property name="maxAge" value="2592000" />
+    </bean>
+</beans>

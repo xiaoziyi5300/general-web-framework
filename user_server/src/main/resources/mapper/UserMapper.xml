@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liu.mapper.UserMapper" >
+    <resultMap id="BaseResultMap" type="com.cn.liu.dto.User">
+        <id column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="pass_word" property="passWord" jdbcType="VARCHAR"/>
+        <result column="head_icon" property="headIcon" jdbcType="VARCHAR"/>
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+        <result column="mobile_phone" property="mobilePhone" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="is_sale" property="isSale" jdbcType="VARCHAR"/>
+        <result column="is_account" property="isAccount" jdbcType="VARCHAR"/>
+        <result column="delete_mark" property="deleteMark" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="create_user_name" property="createUserName" jdbcType="VARCHAR"/>
+        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="modify_user_id" property="modifyUserId" jdbcType="VARCHAR"/>
+        <result column="modify_user_name" property="modifyUserName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="save" parameterType="com.cn.liu.dto.User">
+        insert into t_user (ID, user_name, pass_word,
+        head_icon, nick_name, mobile_phone,
+        email, is_sale, is_account,delete_mark,create_user_id,create_user_name,create_date,
+        modify_user_id,modify_user_name,modify_date
+        )
+        values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR},
+        #{headIcon,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR}, #{isSale,jdbcType=VARCHAR}, #{isAccount,jdbcType=VARCHAR},
+        #{deleteMark,jdbcType=INTEGER},#{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR},
+        #{createDate,jdbcType=TIMESTAMP},
+        #{modifyUserId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <delete id="deleteById" parameterType="java.lang.String">
+        delete from t_user where id =#{id}
+    </delete>
+    <select id="login" resultMap="BaseResultMap">
+        select * from t_user where user_name =#{userName} and pass_word =#{passWord}
+    </select>
+
+    <select id="getUserInfo" resultType="java.lang.Integer">
+        select count(1) from t_user where user_name =#{userName}
+    </select>
+</mapper>
