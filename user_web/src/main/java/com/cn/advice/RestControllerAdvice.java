@@ -31,6 +31,7 @@ public class RestControllerAdvice {
     public ReponseDto errorReponse(Exception ex) {
         ReponseDto dto = new ReponseDto();
         if (ex instanceof BusinessException) {
+            System.out.println(ex.getMessage());
             dto.setMessage(ex.getMessage());
             dto.setCode(((BusinessException) ex).getErrorCode());
         } else {
