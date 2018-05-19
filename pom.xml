@@ -17,6 +17,7 @@
         <module>trade_api</module>
         <module>shop_api</module>
         <module>shop_server</module>
+        <module>shop_ui</module>
     </modules>
 
     <properties>
