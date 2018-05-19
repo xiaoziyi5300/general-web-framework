@@ -8,7 +8,7 @@
     <context id="context1">
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
-            <property name="suppressAllComments" value="true"/>
+            <property name="suppressAllComments" value="false"/>
         </commentGenerator>
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306" userId="root"
@@ -18,15 +18,15 @@
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
-        <javaModelGenerator targetPackage="com.zf.model"
+        <javaModelGenerator targetPackage="com.liu.model"
                             targetProject="src/main/java"/>
         <!-- mapper接口存放目录 -->
-        <sqlMapGenerator targetPackage="com.zf.mapper"
+        <sqlMapGenerator targetPackage="com.liu.mapper"
                          targetProject="src/main/resources/mapper"/>
-        <javaClientGenerator targetPackage="com.zf.mapper"
+        <javaClientGenerator targetPackage="com.liu.mapper"
                              targetProject="src/main/java" type="XMLMAPPER"/>
         <!-- 配置不生成Exmaple文件 -->
-        <table tableName="T_Base_SMSRecord" domainObjectName="TBaseSMSRecord"
+        <table tableName="t_product" domainObjectName="Product"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
