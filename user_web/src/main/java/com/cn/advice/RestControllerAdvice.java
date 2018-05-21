@@ -1,6 +1,6 @@
 package com.cn.advice;
 
-import com.cn.liu.Base.ReponseDto;
+import com.cn.liu.base.ReponseDto;
 import com.cn.liu.exception.BusinessException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
