@@ -1,6 +1,7 @@
 package com.cn.liu.dto;
 
-import com.cn.liu.Base.BaseModel;
+
+import com.cn.liu.base.BaseModel;
 
 import java.io.Serializable;
 

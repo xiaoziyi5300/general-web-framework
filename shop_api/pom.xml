@@ -10,5 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>shop_api</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.cn.zf</groupId>
+            <artifactId>commons</artifactId>
+            <version>1.0.3-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

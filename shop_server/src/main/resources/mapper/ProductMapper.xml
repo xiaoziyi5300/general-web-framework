@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.liu.mapper.ProductMapper">
+    <resultMap id="BaseResultMap" type="com.cn.liu.dto.Product">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="product_name" property="productName" jdbcType="VARCHAR"/>
+        <result column="product_icon" property="productIcon" jdbcType="VARCHAR"/>
+        <result column="product_price" property="productPrice" jdbcType="DECIMAL"/>
+        <result column="product_desc" property="productDesc" jdbcType="VARCHAR"/>
+        <result column="product_content" property="productContent" jdbcType="VARCHAR"/>
+        <result column="product_model" property="productModel" jdbcType="VARCHAR"/>
+        <result column="category_id" property="categoryId" jdbcType="INTEGER"/>
+        <result column="delete_mark" property="deleteMark" jdbcType="INTEGER"/>
+        <result column="create_user_name" property="createUserName" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="DATE"/>
+        <result column="create_user_id" property="createUserId" jdbcType="INTEGER"/>
+        <result column="modify_user_name" property="modifyUserName" jdbcType="VARCHAR"/>
+        <result column="modify_date" property="modifyDate" jdbcType="DATE"/>
+        <result column="modify_user_id" property="modifyUserId" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, product_name, product_icon, product_price, product_desc, product_content, product_model, 
+    category_id, delete_mark, create_user_name, create_date, create_user_id, modify_user_name, 
+    modify_date, modify_user_id
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_product
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.cn.liu.dto.Product">
+    insert into t_product (id, product_name, product_icon, 
+      product_price, product_desc, product_content, 
+      product_model, category_id, delete_mark, 
+      create_user_name, create_date, create_user_id, 
+      modify_user_name, modify_date, modify_user_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{productIcon,jdbcType=VARCHAR}, 
+      #{productPrice,jdbcType=DECIMAL}, #{productDesc,jdbcType=VARCHAR}, #{productContent,jdbcType=VARCHAR}, 
+      #{productModel,jdbcType=VARCHAR}, #{categoryId,jdbcType=INTEGER}, #{deleteMark,jdbcType=INTEGER}, 
+      #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, #{createUserId,jdbcType=INTEGER}, 
+      #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=DATE}, #{modifyUserId,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.cn.liu.dto.Product">
+        insert into t_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="productName != null">
+                product_name,
+            </if>
+            <if test="productIcon != null">
+                product_icon,
+            </if>
+            <if test="productPrice != null">
+                product_price,
+            </if>
+            <if test="productDesc != null">
+                product_desc,
+            </if>
+            <if test="productContent != null">
+                product_content,
+            </if>
+            <if test="productModel != null">
+                product_model,
+            </if>
+            <if test="categoryId != null">
+                category_id,
+            </if>
+            <if test="deleteMark != null">
+                delete_mark,
+            </if>
+            <if test="createUserName != null">
+                create_user_name,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
+            <if test="modifyUserName != null">
+                modify_user_name,
+            </if>
+            <if test="modifyDate != null">
+                modify_date,
+            </if>
+            <if test="modifyUserId != null">
+                modify_user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="productName != null">
+                #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="productIcon != null">
+                #{productIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="productPrice != null">
+                #{productPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="productDesc != null">
+                #{productDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="productContent != null">
+                #{productContent,jdbcType=VARCHAR},
+            </if>
+            <if test="productModel != null">
+                #{productModel,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryId != null">
+                #{categoryId,jdbcType=INTEGER},
+            </if>
+            <if test="deleteMark != null">
+                #{deleteMark,jdbcType=INTEGER},
+            </if>
+            <if test="createUserName != null">
+                #{createUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=DATE},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=INTEGER},
+            </if>
+            <if test="modifyUserName != null">
+                #{modifyUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyDate != null">
+                #{modifyDate,jdbcType=DATE},
+            </if>
+            <if test="modifyUserId != null">
+                #{modifyUserId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.cn.liu.dto.Product">
+        update t_product
+        <set>
+            <if test="productName != null">
+                product_name = #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="productIcon != null">
+                product_icon = #{productIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="productPrice != null">
+                product_price = #{productPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="productDesc != null">
+                product_desc = #{productDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="productContent != null">
+                product_content = #{productContent,jdbcType=VARCHAR},
+            </if>
+            <if test="productModel != null">
+                product_model = #{productModel,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryId != null">
+                category_id = #{categoryId,jdbcType=INTEGER},
+            </if>
+            <if test="deleteMark != null">
+                delete_mark = #{deleteMark,jdbcType=INTEGER},
+            </if>
+            <if test="createUserName != null">
+                create_user_name = #{createUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=DATE},
+            </if>
+            <if test="createUserId != null">
+                create_user_id = #{createUserId,jdbcType=INTEGER},
+            </if>
+            <if test="modifyUserName != null">
+                modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate,jdbcType=DATE},
+            </if>
+            <if test="modifyUserId != null">
+                modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.cn.liu.dto.Product">
+    update t_product
+    set product_name = #{productName,jdbcType=VARCHAR},
+      product_icon = #{productIcon,jdbcType=VARCHAR},
+      product_price = #{productPrice,jdbcType=DECIMAL},
+      product_desc = #{productDesc,jdbcType=VARCHAR},
+      product_content = #{productContent,jdbcType=VARCHAR},
+      product_model = #{productModel,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=INTEGER},
+      delete_mark = #{deleteMark,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+      modify_date = #{modifyDate,jdbcType=DATE},
+      modify_user_id = #{modifyUserId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
