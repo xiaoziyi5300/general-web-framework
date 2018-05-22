@@ -1,4 +1,4 @@
-package com.liu.mapper;
+package com.zf.mapper;
 
 import com.cn.liu.dto.User;
 import org.apache.ibatis.annotations.Param;

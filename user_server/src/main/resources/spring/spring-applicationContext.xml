@@ -8,7 +8,7 @@
     <!-- 引入配置文件 -->
     <context:property-placeholder location="classpath:*.properties" ignore-unresolvable="true"/>
     <!-- spring可以自动去扫描base-pack下面或者子包下面的java文件，如果扫描到有@Component @Controller @Service等这些注解的类，则把这些类注册为bean -->
-    <context:component-scan base-package="com.liu"/>
+    <context:component-scan base-package="com.zf"/>
     <!-- 对@Transactional这个注解进行的驱动-->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
     <!-- 数据源 -->
@@ -41,13 +41,13 @@
     </bean>
     <!-- mybatis mapper 映射-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.liu.mapper"/>
+        <property name="basePackage" value="com.zf.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
     <!-- mybatis SqlSessionFactory 映射-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="typeAliasesPackage" value="com.liu.model;"/>
+        <property name="typeAliasesPackage" value="com.cn.liu.dto;"/>
         <property name="configLocation" value="classpath:mybatis.xml"/>
         <property name="mapperLocations">
             <list>

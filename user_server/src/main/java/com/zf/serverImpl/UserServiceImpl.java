@@ -1,9 +1,9 @@
-package com.liu.serverImpl;
+package com.zf.serverImpl;
 
 import com.cn.liu.constant.CommonConstant;
 import com.cn.liu.exception.BusinessException;
 import com.cn.liu.util.Md5Utils;
-import com.liu.mapper.UserMapper;
+import com.zf.mapper.UserMapper;
 import com.cn.liu.dto.User;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
