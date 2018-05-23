@@ -1,8 +1,10 @@
 package com.cn.authentication;
 
 import com.alibaba.fastjson.JSON;
+import com.cn.liu.constant.CommonConstant;
 import com.cn.liu.dto.User;
 import com.cn.liu.service.UserService;
+import com.cn.liu.util.Md5Utils;
 import com.cn.liu.util.RedisUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -51,7 +53,7 @@ public class CustomRealm extends AuthorizingRealm {
         String userName =t.getUsername();
         String passWord =String.valueOf(t.getPassword());
         System.out.println("账号" +userName +"密码"+passWord);
-        User adminUser = userService.login(userName,passWord);
+        User adminUser = userService.login(userName, Md5Utils.MD5Encode((passWord + CommonConstant.SECRET_KEY), "iso8859-1", false));
         // 如果查询不到返回null
         if (adminUser == null) {
             throw new UnknownAccountException("验证未通过,未知账户");

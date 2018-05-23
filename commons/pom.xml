@@ -11,17 +11,10 @@
     <artifactId>commons</artifactId>
     <version>1.0.3-SNAPSHOT</version>
     <dependencies>
-        <!-- Redis客户端 -->
         <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.9.0</version>
-        </dependency>
-        <!-- redis Spring 基于注解配置 -->
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-            <version>1.7.2.RELEASE</version>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.2.7</version>
         </dependency>
     </dependencies>
 
