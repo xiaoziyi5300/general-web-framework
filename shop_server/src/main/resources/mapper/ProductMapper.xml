@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cn.liu.mapper.ProductMapper">
-    <resultMap id="BaseResultMap" type="com.cn.liu.dto.Product">
+    <resultMap id="BaseResultMap" type="com.cn.liu.model.ProductModel">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="product_name" property="productName" jdbcType="VARCHAR"/>
         <result column="product_icon" property="productIcon" jdbcType="VARCHAR"/>
@@ -33,7 +33,7 @@
     delete from t_product
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.cn.liu.dto.Product">
+    <insert id="insert" parameterType="com.cn.liu.model.ProductModel">
     insert into t_product (id, product_name, product_icon, 
       product_price, product_desc, product_content, 
       product_model, category_id, delete_mark, 
@@ -47,7 +47,7 @@
       #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=DATE}, #{modifyUserId,jdbcType=INTEGER}
       )
   </insert>
-    <insert id="insertSelective" parameterType="com.cn.liu.dto.Product">
+    <insert id="insertSelective" parameterType="com.cn.liu.model.ProductModel">
         insert into t_product
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -144,7 +144,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.cn.liu.dto.Product">
+    <update id="updateByPrimaryKeySelective" parameterType="com.cn.liu.model.ProductModel">
         update t_product
         <set>
             <if test="productName != null">
@@ -192,7 +192,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.cn.liu.dto.Product">
+    <update id="updateByPrimaryKey" parameterType="com.cn.liu.model.ProductModel">
     update t_product
     set product_name = #{productName,jdbcType=VARCHAR},
       product_icon = #{productIcon,jdbcType=VARCHAR},
@@ -210,4 +210,16 @@
       modify_user_id = #{modifyUserId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+    <select id="selectProductByName">
+        select count(1) from t_product where product_name = #{name}
+    </select>
+    <select id="dataTotalCount">
+        select count(*) from t_product where delete_mark = 1
+    </select>
+    <select id="selectByList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from t_product where delete_mark = 1
+    </select>
 </mapper>

@@ -1,17 +1,27 @@
 package com.cn.liu.mapper;
 
-import com.cn.liu.dto.Product;
+import com.cn.liu.model.ProductModel;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Product record);
+    int insert(ProductModel record);
 
-    int insertSelective(Product record);
+    int insertSelective(ProductModel record);
 
-    Product selectByPrimaryKey(Integer id);
+    ProductModel selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Product record);
+    int updateByPrimaryKeySelective(ProductModel record);
 
-    int updateByPrimaryKey(Product record);
+    int updateByPrimaryKey(ProductModel record);
+
+    int selectProductByName(@Param("name") String name);
+
+    int dataTotalCount();
+
+    List<ProductModel> selectByList();
+
 }
