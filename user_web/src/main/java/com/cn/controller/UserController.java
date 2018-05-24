@@ -1,5 +1,6 @@
 package com.cn.controller;
 
+import com.cn.dto.UserReponseDto;
 import com.cn.liu.base.ReponseDto;
 import com.cn.liu.constant.CommonConstant;
 import com.cn.liu.dto.User;
@@ -35,8 +36,8 @@ public class UserController {
      * @return
      */
     @RequestMapping("/user/login")
-    public ReponseDto login(String userName, String passWord){
-        ReponseDto dto = new ReponseDto();
+    public UserReponseDto login(String userName, String passWord) {
+        UserReponseDto dto = new UserReponseDto();
         UsernamePasswordToken token = new UsernamePasswordToken(userName, passWord);
         logger.info("为了验证登录用户而封装的token为" + token);
         token.setRememberMe(true);
@@ -49,6 +50,7 @@ public class UserController {
             logger.info("对用户[" + userName + "]进行登录验证..验证开始");
             currentUser.login(token);
             logger.info("对用户[" + userName + "]进行登录验证..验证通过");
+            dto.setUserName(userName);
             dto.setCode(UserEnum.USER_SUCCESS.getKey());
             dto.setMessage(UserEnum.USER_SUCCESS.getValue());
             dto.setStatus(CommonConstant.SUCCESS_STATUS);
