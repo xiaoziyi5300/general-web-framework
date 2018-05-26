@@ -8,10 +8,10 @@
     <context id="context1">
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
-            <property name="suppressAllComments" value="false"/>
+            <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306" userId="root"
+                        connectionURL="jdbc:mysql://localhost:3306/my_shop" userId="root"
                         password="111"/>
         <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer true，把JDBC DECIMAL 和
             NUMERIC 类型解析为java.math.BigDecimal -->
