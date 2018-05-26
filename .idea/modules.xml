@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/admin_web/admin_web.iml" filepath="$PROJECT_DIR$/admin_web/admin_web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/commons/commons.iml" filepath="$PROJECT_DIR$/commons/commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop.iml" filepath="$PROJECT_DIR$/shop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop_api/shop_api.iml" filepath="$PROJECT_DIR$/shop_api/shop_api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop_server/shop_server.iml" filepath="$PROJECT_DIR$/shop_server/shop_server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop_ui/shop_ui.iml" filepath="$PROJECT_DIR$/shop_ui/shop_ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trade_api/trade_api.iml" filepath="$PROJECT_DIR$/trade_api/trade_api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trade_server/trade_server.iml" filepath="$PROJECT_DIR$/trade_server/trade_server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user_api/user_api.iml" filepath="$PROJECT_DIR$/user_api/user_api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user_server/user_server.iml" filepath="$PROJECT_DIR$/user_server/user_server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user_web/user_web.iml" filepath="$PROJECT_DIR$/user_web/user_web.iml" />
+    </modules>
+  </component>
+</project>
