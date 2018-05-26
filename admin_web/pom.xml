@@ -55,12 +55,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>com.cn.zf</groupId>
             <artifactId>commons</artifactId>
             <version>1.0.3-SNAPSHOT</version>
@@ -127,9 +121,9 @@
             <version>3.4.10</version>
         </dependency>
         <dependency>
-            <groupId>com.github.sgroschupf</groupId>
+            <groupId>com.101tec</groupId>
             <artifactId>zkclient</artifactId>
-            <version>0.1</version>
+            <version>0.4</version>
         </dependency>
         <!-- mysql -->
         <dependency>
@@ -158,6 +152,17 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>1.0.14</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.10</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

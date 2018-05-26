@@ -7,27 +7,16 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * @author lzf
  * desc
- * date 2018/5/26-12:33
+ * date 2018/5/26-15:08
  */
 @Controller
-@RequestMapping("/home")
-public class HomeController {
+@RequestMapping("/menu")
+public class MenuController {
 
-    /****
-     * 主页
-     * @return
-     */
     @RequestMapping("/index")
     public ModelAndView index() {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("/index");
-        return mv;
-    }
-
-    @RequestMapping("/welcome")
-    public ModelAndView welcome() {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("/welcome");
+        mv.setViewName("/menu/menuList");
         return mv;
     }
 }

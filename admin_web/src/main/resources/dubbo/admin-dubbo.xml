@@ -7,7 +7,7 @@
        http://code.alibabatech.com/schema/dubbo
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
     <!-- 提供方应用信息，用于计算依赖关系 -->
-    <dubbo:application name="web-ui"/>
+    <dubbo:application name="${dubbo.systemAlias}"/>
     <!-- 使用zookeeper广播注册中心暴露服务地址 -->
     <dubbo:registry address="${dubbo.registry}"/>
     <dubbo:monitor protocol="registry"/>

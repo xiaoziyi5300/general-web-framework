@@ -51,27 +51,19 @@
     </header>
     <aside>
         <ul class="orderList">
-            <li class="noneList" data-text="新增类目" data-url="catepage.html">
+            <li class="noneList" data-text="主页" data-url="${pageContext.request.contextPath}/home/welcome">
                 <div class="noneicon">
-                    <span class="glyphicon glyphicon-home"></span><span>新增类目</span>
-                </div>
-            </li>
-            <li class="noneList" data-text="产品列表" data-url="productlist.html">
-                <div class="noneicon">
-                    <span class="glyphicon glyphicon-home"></span><span>产品列表</span>
+                    <span class="glyphicon glyphicon-home"></span><span>主页</span>
                 </div>
             </li>
             <li class="hasList">
                 <div class="hasicon">
-                    <span class="glyphicon glyphicon-home"></span><span>菜单1</span><span
+                    <span class="glyphicon glyphicon-home"></span><span>系统设置</span><span
                         class="glyphicon pull-right glyphicon-chevron-down cur"></span>
                 </div>
                 <ul class="menu">
-                    <li class="active" data-text="菜单2" data-url="http://www.baidu.com">菜单2</li>
-                    <li data-text="菜单3" data-url="http://www.sina.com">菜单3</li>
-                    <li data-text="菜单4" data-url="http://www.zuma.com">菜单4</li>
-                    <li data-text="菜单5" data-url="http://www.baidu.com">菜单5</li>
-                    <li data-text="菜单6" data-url="http://www.baidu.com">菜单6</li>
+                    <li class="active" data-text="菜单2" data-url="${pageContext.request.contextPath}/menu/index">菜单列表
+                    </li>
                 </ul>
             </li>
             <li class="hasList">
@@ -96,15 +88,16 @@
         <!-- 选项卡 -->
         <div style="width:100%;padding-right:50px;">
             <ul class="tabslist clear">
-                <li class="tags-li active"><a href="#" class="tags-li-title">新增类目</a><span
+                <li class="tags-li active"><a href="#" class="tags-li-title">主页</a><span
                         class="glyphicon glyphicon-remove iconClose"></span></li>
             </ul>
             <!-- iframe容器 -->
             <div class="content">
-                <h4>新增类目</h4>
+                <h4>主页</h4>
                 <div class="ifamecontainer">
                     <div class="show">
-                        <iframe src="catepage.html" frameborder="0" border='0'></iframe>
+                        <iframe src="${pageContext.request.contextPath}/home/welcome" frameborder="0"
+                                border='0'></iframe>
                     </div>
                 </div>
             </div>
@@ -115,6 +108,6 @@
 </div>
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="../../js/main.js"></script>
+<script src="${pageContext.request.contextPath}/js/main.js"></script>
 </body>
 </html>
