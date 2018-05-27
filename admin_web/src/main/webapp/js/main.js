@@ -59,6 +59,36 @@
     //         title: '404页面'
     //     }
     // ]
+    //显示菜单
+    $.ajax({
+        url: "/api/menu/queryMenuList",
+        cache: false,
+        type: 'POST',
+        dataType: 'json',
+        success: function (result) {
+            $("ul[class='orderList']").empty();
+            if (result) {
+                var fristHtml = '<li class="noneList" data-text="主页" data-url="/home/welcome"> <div class="noneicon"><span class="glyphicon glyphicon-home"></span><span>主页</span></div> </li>';
+                var secondHeml = '';
+                for (var i = 0; i < result.length; i++) {
+                    var _frist = result[i];
+                    fristHtml += '\'<li class="hasList"> <div class="hasicon"><span class="glyphicon glyphicon-home"></span><span>' + _frist.menuName + '</span><span class="glyphicon pull-right glyphicon-chevron-down cur"></span> </div> <ul class="menu">'
+                    var secondList = _frist.childList;
+                    if (secondList) {
+                        for (var j = 0; j < secondList.length; j++) {
+                            var second = secondList[j];
+                            secondHeml += '<li class="active" data-text="' + second.menuName + '" data-url="' + second.menuUrl + '">' + second.menuName + '</li>';
+                        }
+                    }
+                    fristHtml += secondHeml;
+                    fristHtml += '</ul></li>'
+                }
+                $("ul[class='orderList']").append(fristHtml);
+            }
+        }
+    });
+
+
     var home = {
         tabIndex: null
     }

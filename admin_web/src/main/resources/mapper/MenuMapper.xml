@@ -196,4 +196,36 @@
         modify_user_id = #{modifyUserId,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
+    <select id="queryAllList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from t_menu where is_effect = 1
+    </select>
+    <select id="queryById" resultMap="BaseResultMap">
+        select id,menu_name from t_menu where id =#{menuId}
+    </select>
+    <resultMap type="com.cn.model.Menu" id="recursionMenuMap">
+        <id column="id" property="id"/>
+        <result column="menu_name" property="menuName"/>
+        <result column="menu_url" property="menuUrl"/>
+        <collection property="childList" ofType="com.cn.model.Menu" column="id" select="findMenuByParentId"/>
+    </resultMap>
+    <select id="queryMenuList" resultMap="recursionMenuMap">
+        SELECT id,`menu_name`,parent_id FROM t_menu WHERE (parent_id ='' or parent_id is NULL) and is_effect = 1 ORDER BY `sort` ASC
+    </select>
+    <select id="findMenuByParentId" resultType="com.cn.model.Menu">
+        SELECT id,`menu_name` as menuName ,parent_id as parentId,menu_url as menuUrl  FROM t_menu WHERE parent_id = #{id} and is_effect = 1  ORDER BY `sort` ASC
+    </select>
+    <select id="queryByName" resultType="java.lang.Integer">
+        select count(1) from t_menu where menu_name =#{menuName}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+    </select>
+    <select id="queryByNameAndParentId" resultType="java.lang.Integer">
+        select count(1) from t_menu where menu_name =#{menuName} and parent_id =#{parentId}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+    </select>
 </mapper>

@@ -12,7 +12,7 @@
     <title>登录</title>
     <link rel="stylesheet" href="css/login.css"/>
 </head>
-<body>
+<body onkeydown="keyOnClick(event);">
 <div class="main">
     <div>
         <h1>welcome</h1>
@@ -33,8 +33,15 @@
         $(document).on("click", "#login", function () {
             login();
         })
-    })
+    });
 
+    function keyOnClick(e) {
+        var theEvent = window.event || e;
+        var code = theEvent.keyCode || theEvent.which;
+        if (code == 13) {  //回车键的键值为13
+            login();  //调用搜索事件
+        }
+    }
     function login() {
         var userName = $.trim($("#userName").val());
         var passWord = $.trim($("#passWord").val());

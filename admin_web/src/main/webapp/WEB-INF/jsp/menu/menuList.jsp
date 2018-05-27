@@ -107,13 +107,13 @@
                 </div>
                 <div class="form-group">
                     <label for="menuName" class="col-sm-3 control-label">选择父节点:</label>
-                    <div class="col-sm-6">
-                        <select class="selectpicker" id="selectId">
+                    <div class="col-sm-6" name="parentMenu">
+                        <%--<select class="selectpicker" id="selectId">
                             <option value="">请选择</option>
                             <option value="1">Mustard</option>
                             <option value="2">Ketchup</option>
                             <option value="3">Relish</option>
-                        </select>
+                        </select>--%>
                     </div>
                 </div>
                 <div class="form-group">

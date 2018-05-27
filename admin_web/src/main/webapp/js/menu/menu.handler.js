@@ -8,16 +8,21 @@ $(function () {
 
     $(":radio[name='isParent']").click(function () {
         if ($(this).val() == 1) {
-            $('#selectId').prop('disabled', true);
+            $('#selectId').attr('disabled', true);
+            $('#menuUrl').attr('readonly', true)
         } else {
-            $('#selectId').prop('disabled', false);
+            $('#selectId').attr('disabled', false);
+            $('#menuUrl').attr('readonly', false)
         }
     });
 });
 var memufun = function () {
     this.save_open = function () {
         $('#myModalLabel').html("新增菜单");
+        new memufun().selectFristMenu();
         $('#selectId').prop('disabled', true);
+        $('#menuUrl').attr('readonly', true);
+        $('#myModal').modal({backdrop: 'static', keyboard: false});
         $('#myModal').modal('show')
     },
         this.save = function () {
@@ -42,6 +47,29 @@ var memufun = function () {
                         $('#myModal').modal('hide');
                     } else {
                         alert(result.message);
+                    }
+                }
+            });
+        },
+        this.selectFristMenu = function () {
+            $.ajax({
+                url: "/api/menu/queryAllList",
+                cache: false,
+                type: 'POST',
+                dataType: 'json',
+                success: function (result) {
+                    if (result.status == 1) {
+                        $("div[name='parentMenu']").empty();
+                        var menuList = result.list;
+                        var _html = '<select class="selectpicker" id="selectId" ><option value="">请选择</option>';
+                        if (menuList) {
+                            for (var i = 0; i < menuList.length; i++) {
+                                _html += '<option value=' + menuList[i].id + '>' + menuList[i].menuName + '</option>';
+                            }
+                            _html += '</select>';
+                        }
+                        $("div[name='parentMenu']").append(_html);
+                        $(".selectpicker").selectpicker('refresh');
                     }
                 }
             });

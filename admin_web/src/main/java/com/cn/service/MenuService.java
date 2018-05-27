@@ -2,6 +2,8 @@ package com.cn.service;
 
 import com.cn.model.Menu;
 
+import java.util.List;
+
 /**
  * @author lzf
  * desc
@@ -12,4 +14,10 @@ public interface MenuService {
     void save(Menu menu);
 
     void update(Menu menu);
+
+    List<Menu> queryAllList();
+
+    Menu queryById(String id);
+
+    List<Menu> queryMenuList();
 }

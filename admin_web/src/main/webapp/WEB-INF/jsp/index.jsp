@@ -51,7 +51,7 @@
     </header>
     <aside>
         <ul class="orderList">
-            <li class="noneList" data-text="主页" data-url="${pageContext.request.contextPath}/home/welcome">
+            <%--<li class="noneList" data-text="主页" data-url="${pageContext.request.contextPath}/home/welcome">
                 <div class="noneicon">
                     <span class="glyphicon glyphicon-home"></span><span>主页</span>
                 </div>
@@ -62,27 +62,11 @@
                         class="glyphicon pull-right glyphicon-chevron-down cur"></span>
                 </div>
                 <ul class="menu">
-                    <li class="active" data-text="菜单2" data-url="${pageContext.request.contextPath}/menu/index">菜单列表
+                    <li class="active" data-text="菜单列表" data-url="${pageContext.request.contextPath}/menu/index">菜单列表
                     </li>
                 </ul>
-            </li>
-            <li class="hasList">
-                <div class="hasicon">
-                    <span class="glyphicon glyphicon-home"></span><span>菜单1</span><span
-                        class="glyphicon pull-right glyphicon-chevron-down cur"></span>
-                </div>
-                <ul class="menu">
-                    <li data-text="菜单7" data-url="http://www.sina.com">菜单7</li>
-                    <li data-text="菜单8" data-url="http://www.zuma.com">菜单8</li>
-                </ul>
-            </li>
-            <li class="noneList" data-text="测试" data-url="http://www.baidu.com">
-                <div class="noneicon">
-                    <span class="glyphicon glyphicon-home"></span><span>测试</span>
-                </div>
-            </li>
+            </li>--%>
         </ul>
-
     </aside>
     <main>
         <!-- 选项卡 -->

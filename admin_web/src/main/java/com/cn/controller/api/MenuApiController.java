@@ -1,5 +1,6 @@
 package com.cn.controller.api;
 
+import com.cn.dto.menu.MenuReponseDto;
 import com.cn.liu.base.ReponseDto;
 import com.cn.liu.constant.CommonConstant;
 import com.cn.model.Menu;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author lzf
@@ -35,8 +38,44 @@ public class MenuApiController {
         } else {
             menuService.update(menu);
         }
-        reponseDto.setMessage("操作成功");
+        reponseDto.setMessage(CommonConstant.SUCCESS_MESSAGE);
         reponseDto.setStatus(CommonConstant.SUCCESS_STATUS);
         return reponseDto;
+    }
+
+    /***
+     * 获取所有已经启用的一级菜单
+     * @return
+     */
+    @RequestMapping(value = "/queryAllList", method = RequestMethod.POST)
+    public MenuReponseDto queryAllList() {
+        MenuReponseDto menuReponseDto = new MenuReponseDto();
+        menuReponseDto.setList(menuService.queryAllList());
+        menuReponseDto.setMessage(CommonConstant.SUCCESS_MESSAGE);
+        menuReponseDto.setStatus(CommonConstant.SUCCESS_STATUS);
+        return menuReponseDto;
+    }
+
+    /***
+     * 根据ID获取详情信息
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/queryById", method = RequestMethod.POST)
+    public MenuReponseDto queryById(String id) {
+        MenuReponseDto menuReponseDto = new MenuReponseDto();
+        menuReponseDto.setMenu(menuService.queryById(id));
+        menuReponseDto.setMessage(CommonConstant.SUCCESS_MESSAGE);
+        menuReponseDto.setStatus(CommonConstant.SUCCESS_STATUS);
+        return menuReponseDto;
+    }
+
+    /***
+     * 递归查询系统菜单
+     * @return
+     */
+    @RequestMapping("/queryMenuList")
+    public List<Menu> queryMenuList() {
+        return menuService.queryMenuList();
     }
 }

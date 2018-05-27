@@ -1,6 +1,7 @@
 package com.cn.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Menu {
     private Integer id;
@@ -30,6 +31,8 @@ public class Menu {
     private Date modifyDate;
 
     private Integer modifyUserId;
+
+    List<Menu> childList;
 
     public Integer getId() {
         return id;
@@ -141,5 +144,13 @@ public class Menu {
 
     public void setModifyUserId(Integer modifyUserId) {
         this.modifyUserId = modifyUserId;
+    }
+
+    public List<Menu> getChildList() {
+        return childList;
+    }
+
+    public void setChildList(List<Menu> childList) {
+        this.childList = childList;
     }
 }
