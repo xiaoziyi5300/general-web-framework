@@ -8,6 +8,7 @@ import com.cn.liu.mapper.ProductCategoryMapper;
 import com.cn.liu.model.ProductCategoryModel;
 import com.cn.liu.service.ProductCategoryService;
 import com.cn.liu.util.BeanUtil;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,8 +56,9 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         PageHelper.startPage(pageRequstParams.getPage(), pageRequstParams.getRows());
         List<ProductCategoryModel> productCategoryModelList = productCategoryMapper.selectByList();
         PageBean pageBean = new PageBean();
-        pageBean.setRoows(BeanUtil.mapper(productCategoryModelList, ProductCategory.class));
-        return null;
+        pageBean.setRows(BeanUtil.mapper(productCategoryModelList, ProductCategory.class));
+        pageBean.setTotal(queryToatalCount());
+        return pageBean;
     }
 
     private int queryToatalCount() {

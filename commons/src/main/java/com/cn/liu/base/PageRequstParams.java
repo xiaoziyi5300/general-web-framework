@@ -11,7 +11,7 @@ public class PageRequstParams implements Serializable {
 
     private int rows;//页面大小
     private int page;//页码
-    private int sort;//排序列名
+    private String sort;//排序列名
     private String sortOrder;//排位命令（desc，asc）
 
     public int getRows() {
@@ -30,11 +30,11 @@ public class PageRequstParams implements Serializable {
         this.page = page;
     }
 
-    public int getSort() {
+    public String getSort() {
         return sort;
     }
 
-    public void setSort(int sort) {
+    public void setSort(String sort) {
         this.sort = sort;
     }
 

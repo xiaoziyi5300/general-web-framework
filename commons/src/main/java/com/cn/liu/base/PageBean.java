@@ -11,7 +11,7 @@ import java.util.List;
 public class PageBean<T> implements Serializable {
 
     private int total;
-    private List<T> roows;
+    private List<T> rows;
 
     public int getTotal() {
         return total;
@@ -21,11 +21,11 @@ public class PageBean<T> implements Serializable {
         this.total = total;
     }
 
-    public List<T> getRoows() {
-        return roows;
+    public List<T> getRows() {
+        return rows;
     }
 
-    public void setRoows(List<T> roows) {
-        this.roows = roows;
+    public void setRows(List<T> rows) {
+        this.rows = rows;
     }
 }
