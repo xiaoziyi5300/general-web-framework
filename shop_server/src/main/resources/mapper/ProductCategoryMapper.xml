@@ -193,4 +193,13 @@
         from t_product_category
         where delete_mark = 1
     </select>
+    <select id="queryCategoryList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_product_category
+        where delete_mark = 1
+        <if test="parentId != null">
+            and parent_id = #{parentId}
+        </if>
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.cn.controller.api;
 
+import com.cn.dto.category.CategoryReponseDto;
 import com.cn.liu.base.PageBean;
 import com.cn.liu.base.PageRequstParams;
 import com.cn.liu.base.ReponseDto;
@@ -34,7 +35,7 @@ public class ProductCategoryApiController {
      * @return
      */
     @RequestMapping(value = "/queryListByPage", method = RequestMethod.POST)
-    public PageBean<ProductCategory> queryListByPage(HttpServletRequest request, String date) {
+    public PageBean<ProductCategory> queryListByPage(HttpServletRequest request) {
         return productCategoryService.queryListByPage(PageRequetUtil.getPageRequest(request));
     }
 
@@ -56,4 +57,17 @@ public class ProductCategoryApiController {
         return reponseDto;
     }
 
+    /***
+     * 获取类目
+     * @param parentId
+     * @return
+     */
+    @RequestMapping(value = "/queryCategoryList", method = RequestMethod.POST)
+    public CategoryReponseDto queryCategoryList(int parentId) {
+        CategoryReponseDto categoryReponseDto = new CategoryReponseDto();
+        categoryReponseDto.setList(productCategoryService.queryCategoryList(parentId));
+        categoryReponseDto.setMessage(CommonConstant.SUCCESS_MESSAGE);
+        categoryReponseDto.setStatus(CommonConstant.SUCCESS_STATUS);
+        return categoryReponseDto;
+    }
 }

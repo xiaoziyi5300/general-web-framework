@@ -1,6 +1,7 @@
 package com.cn.liu.mapper;
 
 
+import com.cn.liu.dto.ProductCategory;
 import com.cn.liu.model.ProductCategoryModel;
 import org.apache.ibatis.annotations.Param;
 
@@ -26,4 +27,6 @@ public interface ProductCategoryMapper {
     int queryToatalCount();
 
     List<ProductCategoryModel> selectByList();
+
+    List<ProductCategory> queryCategoryList(int parentId);
 }

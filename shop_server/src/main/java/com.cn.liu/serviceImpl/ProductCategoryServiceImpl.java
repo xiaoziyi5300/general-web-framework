@@ -61,6 +61,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         return pageBean;
     }
 
+    @Override
+    public List<ProductCategory> queryCategoryList(int parentId) {
+        return productCategoryMapper.queryCategoryList(parentId);
+    }
+
     private int queryToatalCount() {
         return productCategoryMapper.queryToatalCount();
     }
