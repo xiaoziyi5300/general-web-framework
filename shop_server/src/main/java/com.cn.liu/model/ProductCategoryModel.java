@@ -12,6 +12,7 @@ public class ProductCategoryModel {
     private String categoryName;
     private Integer parentId;
     private Integer level;
+    private Integer sort;
     private int deleteMark;
     private String createUserId;
     private String createUserName;
@@ -106,5 +107,13 @@ public class ProductCategoryModel {
 
     public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }

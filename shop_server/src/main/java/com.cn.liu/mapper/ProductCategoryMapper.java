@@ -4,6 +4,8 @@ package com.cn.liu.mapper;
 import com.cn.liu.model.ProductCategoryModel;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface ProductCategoryMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -20,4 +22,8 @@ public interface ProductCategoryMapper {
     int checkBean(@Param("productCategoryModel") ProductCategoryModel productCategoryModel);
 
     void deleteById(int id);
+
+    int queryToatalCount();
+
+    List<ProductCategoryModel> selectByList();
 }

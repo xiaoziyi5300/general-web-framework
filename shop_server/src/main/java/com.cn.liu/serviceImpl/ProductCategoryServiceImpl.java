@@ -1,13 +1,18 @@
 package com.cn.liu.serviceImpl;
 
+import com.cn.liu.base.PageBean;
+import com.cn.liu.base.PageRequstParams;
 import com.cn.liu.dto.ProductCategory;
 import com.cn.liu.exception.BusinessException;
 import com.cn.liu.mapper.ProductCategoryMapper;
 import com.cn.liu.model.ProductCategoryModel;
 import com.cn.liu.service.ProductCategoryService;
 import com.cn.liu.util.BeanUtil;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author lzf
@@ -24,9 +29,10 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     public void save(ProductCategory productCategory) {
         ProductCategoryModel model = BeanUtil.mapper(productCategory, ProductCategoryModel.class);
-        if (checkBean(model)) {
+        if (!checkBean(model)) {
             throw new BusinessException("商品类目重复");
         }
+        model.setDeleteMark(1);
         productCategoryMapper.insertSelective(model);
     }
 
@@ -42,6 +48,19 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     public void deleteById(int id) {
         productCategoryMapper.deleteById(id);
+    }
+
+    @Override
+    public PageBean<ProductCategory> queryListByPage(PageRequstParams pageRequstParams) {
+        PageHelper.startPage(pageRequstParams.getPage(), pageRequstParams.getRows());
+        List<ProductCategoryModel> productCategoryModelList = productCategoryMapper.selectByList();
+        PageBean pageBean = new PageBean();
+        pageBean.setRoows(BeanUtil.mapper(productCategoryModelList, ProductCategory.class));
+        return null;
+    }
+
+    private int queryToatalCount() {
+        return productCategoryMapper.queryToatalCount();
     }
 
     private boolean checkBean(ProductCategoryModel productCategoryModel) {

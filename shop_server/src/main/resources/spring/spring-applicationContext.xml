@@ -41,7 +41,7 @@
     </bean>
     <!-- mybatis mapper 映射-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.liu.mapper"/>
+        <property name="basePackage" value="com.cn.liu.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
     <!-- mybatis SqlSessionFactory 映射-->

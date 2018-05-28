@@ -6,6 +6,7 @@
         <result column="category_name" property="categoryName" jdbcType="VARCHAR"/>
         <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
         <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
         <result column="delete_mark" property="deleteMark" jdbcType="INTEGER"/>
         <result column="create_user_name" property="createUserName" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="DATE"/>
@@ -15,28 +16,30 @@
         <result column="modify_user_id" property="modifyUserId" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, category_name, parent_id, level, delete_mark, create_user_name, create_date, 
-    create_user_id, modify_user_name, modify_date, modify_user_id
-  </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        id, category_name, parent_id, level, sort, delete_mark, create_user_name, create_date,
+        create_user_id, modify_user_name, modify_date, modify_user_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_product_category
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_product_category
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+        delete from t_product_category
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
     <insert id="insert" parameterType="com.cn.liu.model.ProductCategoryModel">
-    insert into t_product_category (id, category_name, parent_id, 
-      level, delete_mark, create_user_name, 
-      create_date, create_user_id, modify_user_name, 
-      modify_date, modify_user_id)
-    values (#{id,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
-      #{level,jdbcType=INTEGER}, #{deleteMark,jdbcType=INTEGER}, #{createUserName,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=DATE}, #{createUserId,jdbcType=INTEGER}, #{modifyUserName,jdbcType=VARCHAR}, 
-      #{modifyDate,jdbcType=DATE}, #{modifyUserId,jdbcType=INTEGER})
+        insert into t_product_category (id, category_name, parent_id,
+        level, sort, delete_mark,
+        create_user_name, create_date, create_user_id,
+        modify_user_name, modify_date, modify_user_id
+        )
+        values (#{id,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER},
+        #{level,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{deleteMark,jdbcType=INTEGER},
+        #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, #{createUserId,jdbcType=INTEGER},
+        #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=DATE}, #{modifyUserId,jdbcType=INTEGER}
+        )
   </insert>
     <insert id="insertSelective" parameterType="com.cn.liu.model.ProductCategoryModel">
         insert into t_product_category
@@ -52,6 +55,9 @@
             </if>
             <if test="level != null">
                 level,
+            </if>
+            <if test="sort != null">
+                sort,
             </if>
             <if test="deleteMark != null">
                 delete_mark,
@@ -88,6 +94,9 @@
             <if test="level != null">
                 #{level,jdbcType=INTEGER},
             </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
             <if test="deleteMark != null">
                 #{deleteMark,jdbcType=INTEGER},
             </if>
@@ -123,6 +132,9 @@
             <if test="level != null">
                 level = #{level,jdbcType=INTEGER},
             </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
             <if test="deleteMark != null">
                 delete_mark = #{deleteMark,jdbcType=INTEGER},
             </if>
@@ -148,19 +160,20 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.cn.liu.model.ProductCategoryModel">
-    update t_product_category
-    set category_name = #{categoryName,jdbcType=VARCHAR},
-      parent_id = #{parentId,jdbcType=INTEGER},
-      level = #{level,jdbcType=INTEGER},
-      delete_mark = #{deleteMark,jdbcType=INTEGER},
-      create_user_name = #{createUserName,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=DATE},
-      create_user_id = #{createUserId,jdbcType=INTEGER},
-      modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
-      modify_date = #{modifyDate,jdbcType=DATE},
-      modify_user_id = #{modifyUserId,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        update t_product_category
+        set category_name = #{categoryName,jdbcType=VARCHAR},
+        parent_id = #{parentId,jdbcType=INTEGER},
+        level = #{level,jdbcType=INTEGER},
+        sort = #{sort,jdbcType=INTEGER},
+        delete_mark = #{deleteMark,jdbcType=INTEGER},
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+        create_date = #{createDate,jdbcType=DATE},
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+        modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+        modify_date = #{modifyDate,jdbcType=DATE},
+        modify_user_id = #{modifyUserId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
     <select id="checkBean" resultType="java.lang.Integer" parameterType="com.cn.liu.model.ProductCategoryModel">
         select count(1)
         from t_product_category where category_name =#{productCategoryModel.categoryName}
@@ -171,4 +184,13 @@
     <update id="deleteById">
         update t_product_category set delete_mark = 0 where id = #{id}
     </update>
+    <select id="queryToatalCount" resultType="java.lang.Integer">
+        select count(1) from t_product_category where delete_mark = 1
+    </select>
+    <select id="selectByList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from t_product_category
+        where delete_mark = 1
+    </select>
 </mapper>

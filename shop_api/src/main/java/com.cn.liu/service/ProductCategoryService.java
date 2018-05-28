@@ -1,5 +1,7 @@
 package com.cn.liu.service;
 
+import com.cn.liu.base.PageBean;
+import com.cn.liu.base.PageRequstParams;
 import com.cn.liu.dto.ProductCategory;
 
 /**
@@ -14,4 +16,6 @@ public interface ProductCategoryService {
     public void update(ProductCategory productCategory);
 
     public void deleteById(int id);
+
+    PageBean<ProductCategory> queryListByPage(PageRequstParams pageRequstParams);
 }

@@ -2,9 +2,10 @@ package com.cn.liu.dto;
 
 import com.cn.liu.base.BaseModel;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ProductCategory extends BaseModel {
+public class ProductCategory extends BaseModel implements Serializable {
     private Integer id;
 
     private String categoryName;
@@ -12,6 +13,8 @@ public class ProductCategory extends BaseModel {
     private Integer parentId;
 
     private Integer level;
+
+    private Integer sort;
 
     public Integer getId() {
         return id;
@@ -43,5 +46,13 @@ public class ProductCategory extends BaseModel {
 
     public void setLevel(Integer level) {
         this.level = level;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }

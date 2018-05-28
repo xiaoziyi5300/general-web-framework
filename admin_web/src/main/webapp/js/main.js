@@ -69,18 +69,19 @@
             $("ul[class='orderList']").empty();
             if (result) {
                 var fristHtml = '<li class="noneList" data-text="主页" data-url="/home/welcome"> <div class="noneicon"><span class="glyphicon glyphicon-home"></span><span>主页</span></div> </li>';
-                var secondHeml = '';
+                var secondHtml = '';
                 for (var i = 0; i < result.length; i++) {
                     var _frist = result[i];
+                    secondHtml = '';
                     fristHtml += '\'<li class="hasList"> <div class="hasicon"><span class="glyphicon glyphicon-home"></span><span>' + _frist.menuName + '</span><span class="glyphicon pull-right glyphicon-chevron-down cur"></span> </div> <ul class="menu">'
                     var secondList = _frist.childList;
-                    if (secondList) {
+                    if (secondList.length != 0) {
                         for (var j = 0; j < secondList.length; j++) {
                             var second = secondList[j];
-                            secondHeml += '<li class="active" data-text="' + second.menuName + '" data-url="' + second.menuUrl + '">' + second.menuName + '</li>';
+                            secondHtml += '<li class="active" data-text="' + second.menuName + '" data-url="' + second.menuUrl + '">' + second.menuName + '</li>';
                         }
                     }
-                    fristHtml += secondHeml;
+                    fristHtml += secondHtml;
                     fristHtml += '</ul></li>'
                 }
                 $("ul[class='orderList']").append(fristHtml);

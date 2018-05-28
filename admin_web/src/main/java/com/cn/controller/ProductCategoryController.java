@@ -13,6 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/productCategory")
 public class ProductCategoryController {
 
+    /***
+     * 商品类目主页
+     * @return
+     */
     @RequestMapping("/index")
     public ModelAndView index() {
         ModelAndView mv = new ModelAndView();

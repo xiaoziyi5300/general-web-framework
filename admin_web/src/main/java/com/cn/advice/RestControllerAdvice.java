@@ -35,6 +35,9 @@ public class RestControllerAdvice {
         if (ex instanceof SystemException) {
             dto.setMessage(ex.getMessage());
             dto.setCode(((BusinessException) ex).getErrorCode());
+        } else if (ex instanceof BusinessException) {
+            dto.setMessage(ex.getMessage());
+            dto.setCode(((BusinessException) ex).getErrorCode());
         } else {
             dto.setMessage(ERROR_MESSAGE);
         }

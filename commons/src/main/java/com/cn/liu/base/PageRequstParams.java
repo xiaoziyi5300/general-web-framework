@@ -1,0 +1,48 @@
+package com.cn.liu.base;
+
+import java.io.Serializable;
+
+/**
+ * @author lzf
+ * @date 2018-05-28
+ * @desc
+ */
+public class PageRequstParams implements Serializable {
+
+    private int rows;//页面大小
+    private int page;//页码
+    private int sort;//排序列名
+    private String sortOrder;//排位命令（desc，asc）
+
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+
+    public String getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(String sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+}

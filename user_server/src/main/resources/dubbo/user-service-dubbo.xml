@@ -11,6 +11,6 @@
     <!-- 使用zookeeper广播注册中心暴露服务地址 -->
     <dubbo:registry address="${dubbo.registry}"/>
     <dubbo:protocol name="dubbo" port="${dubbo.protocol}"></dubbo:protocol>
-    <dubbo:monitor protocol="registry"/>
+    <!--<dubbo:monitor protocol="registry"/>-->
     <dubbo:service interface="com.cn.liu.service.UserService" ref="userService" />
 </beans>
