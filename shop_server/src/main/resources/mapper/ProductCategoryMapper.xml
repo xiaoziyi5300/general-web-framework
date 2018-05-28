@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cn.liu.mapper.ProductCategoryMapper">
-    <resultMap id="BaseResultMap" type="com.cn.liu.dto.ProductCategory">
+    <resultMap id="BaseResultMap" type="com.cn.liu.model.ProductCategoryModel">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="category_name" property="categoryName" jdbcType="VARCHAR"/>
         <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
@@ -28,7 +28,7 @@
     delete from t_product_category
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.cn.liu.dto.ProductCategory">
+    <insert id="insert" parameterType="com.cn.liu.model.ProductCategoryModel">
     insert into t_product_category (id, category_name, parent_id, 
       level, delete_mark, create_user_name, 
       create_date, create_user_id, modify_user_name, 
@@ -38,7 +38,7 @@
       #{createDate,jdbcType=DATE}, #{createUserId,jdbcType=INTEGER}, #{modifyUserName,jdbcType=VARCHAR}, 
       #{modifyDate,jdbcType=DATE}, #{modifyUserId,jdbcType=INTEGER})
   </insert>
-    <insert id="insertSelective" parameterType="com.cn.liu.dto.ProductCategory">
+    <insert id="insertSelective" parameterType="com.cn.liu.model.ProductCategoryModel">
         insert into t_product_category
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -111,7 +111,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.cn.liu.dto.ProductCategory">
+    <update id="updateByPrimaryKeySelective" parameterType="com.cn.liu.model.ProductCategoryModel">
         update t_product_category
         <set>
             <if test="categoryName != null">
@@ -147,7 +147,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.cn.liu.dto.ProductCategory">
+    <update id="updateByPrimaryKey" parameterType="com.cn.liu.model.ProductCategoryModel">
     update t_product_category
     set category_name = #{categoryName,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=INTEGER},
@@ -161,4 +161,14 @@
       modify_user_id = #{modifyUserId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <select id="checkBean" resultType="java.lang.Integer" parameterType="com.cn.liu.model.ProductCategoryModel">
+        select count(1)
+        from t_product_category where category_name =#{productCategoryModel.categoryName}
+        <if test="productCategoryModel.id != null">
+            and id != #{productCategoryModel.id}
+        </if>
+    </select>
+    <update id="deleteById">
+        update t_product_category set delete_mark = 0 where id = #{id}
+    </update>
 </mapper>

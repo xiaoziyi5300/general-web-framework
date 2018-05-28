@@ -41,13 +41,13 @@
     </bean>
     <!-- mybatis mapper 映射-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.zf.mapper"/>
+        <property name="basePackage" value="com.liu.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
     <!-- mybatis SqlSessionFactory 映射-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="typeAliasesPackage" value="com.cn.liu.dto;"/>
+        <property name="typeAliasesPackage" value="com.cn.liu.model;"/>
         <!-- <property name="configLocation" value="classpath:/spring/mybatis.xml"/>-->
         <property name="mapperLocations">
             <list>

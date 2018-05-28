@@ -64,6 +64,11 @@
             <artifactId>user_api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.cn.zf</groupId>
+            <artifactId>shop_api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!-- spring -->
         <dependency>
             <groupId>org.springframework</groupId>

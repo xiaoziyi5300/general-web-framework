@@ -16,5 +16,8 @@
     <dubbo:reference interface="com.cn.liu.service.UserService" id="userService" check="false" timeout="60000"
                      mock="true"/>
 
-
+    <dubbo:reference interface="com.cn.liu.service.ProductService" id="productService" check="false" timeout="60000"
+                     mock="true"/>
+    <dubbo:reference interface="com.cn.liu.service.ProductCategoryService" id="productCategoryService" check="false"
+                     timeout="60000" mock="true"/>
 </beans>
