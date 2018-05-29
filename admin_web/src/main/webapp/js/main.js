@@ -106,7 +106,7 @@
             $('.tabslist>li a').each(function (i, v) {
                 if (texts == $(this).text()) {
                     open = true;
-                    $('.content h4').text(texts);
+                    //$('.content h4').text(texts);
                     $(".tabslist>li").eq(i).addClass('active').siblings().removeClass('active');
                     $(".ifamecontainer>div").eq(i).show().siblings().hide();
                     return false;

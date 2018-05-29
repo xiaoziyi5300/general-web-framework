@@ -74,7 +74,6 @@
             </ul>
             <!-- iframe容器 -->
             <div class="content">
-                <h4>主页</h4>
                 <div class="ifamecontainer">
                     <div class="show">
                         <iframe src="${pageContext.request.contextPath}/home/welcome" frameborder="0"
