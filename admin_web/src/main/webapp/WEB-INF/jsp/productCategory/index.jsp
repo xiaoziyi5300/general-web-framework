@@ -19,8 +19,11 @@
     <h4>
         <button id="save-btn" data-loading-text="loading..." class="btn btn-primary">新增类目</button>
     </h4>
-    <table id="table">
-    </table>
+    <div class="testClass">
+        <table id="table">
+        </table>
+    </div>
+
 </div>
 <!-- 模态框（Modal） -->
 <input type="hidden" id="cId"/>
@@ -32,7 +35,7 @@
                 <h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
             </div>
             <form class="form-horizontal" role="form">
-                <div class="form-group">
+                <div class="form-group" style="margin-top: 16px;">
                     <label for="CategoryName" class="col-sm-3 control-label">类目名称:</label>
                     <div class="col-sm-5">
                         <input type="text" class="form-control" id="CategoryName"

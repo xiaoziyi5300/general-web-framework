@@ -1,6 +1,6 @@
 $(function () {
     new pridcutCategoryFun().initData();
-    $('div[class="fixed-table-body"]').css({'height': '81%'});
+    //$('div[class="fixed-table-body"]').css({'height': '81%'});
     $(document).on('click', '#save-btn', function () {
         new pridcutCategoryFun().openDialog();
     });

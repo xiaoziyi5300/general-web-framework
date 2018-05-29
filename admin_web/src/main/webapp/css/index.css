@@ -211,7 +211,7 @@ a:hover, a:active {
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
-    min-height: 750px;
+    min-height: 600px;
     position: relative;
 }
 
@@ -266,4 +266,8 @@ header .dropdown button:hover {
 
 .settings {
     cursor: pointer;
+}
+
+.testClass .fixed-table-body {
+    height: initial;
 }
