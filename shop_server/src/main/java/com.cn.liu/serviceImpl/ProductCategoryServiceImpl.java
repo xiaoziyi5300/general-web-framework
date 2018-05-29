@@ -40,9 +40,10 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     public void update(ProductCategory productCategory) {
         ProductCategoryModel model = BeanUtil.mapper(productCategory, ProductCategoryModel.class);
-        if (checkBean(model)) {
+        if (!checkBean(model)) {
             throw new BusinessException("商品类目重复");
         }
+        model.setDeleteMark(1);
         productCategoryMapper.updateByPrimaryKeySelective(model);
     }
 
@@ -54,20 +55,25 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     public PageBean<ProductCategory> queryListByPage(PageRequstParams pageRequstParams) {
         PageHelper.startPage(pageRequstParams.getPage(), pageRequstParams.getRows());
-        List<ProductCategoryModel> productCategoryModelList = productCategoryMapper.selectByList();
+        List<ProductCategoryModel> productCategoryModelList = productCategoryMapper.selectByList(pageRequstParams.getParentId());
         PageBean pageBean = new PageBean();
         pageBean.setRows(BeanUtil.mapper(productCategoryModelList, ProductCategory.class));
-        pageBean.setTotal(queryToatalCount());
+        pageBean.setTotal(queryToatalCount(pageRequstParams.getParentId()));
         return pageBean;
     }
 
     @Override
     public List<ProductCategory> queryCategoryList(int parentId) {
-        return productCategoryMapper.queryCategoryList(parentId);
+        return BeanUtil.mapper(productCategoryMapper.queryCategoryList(parentId), ProductCategory.class);
     }
 
-    private int queryToatalCount() {
-        return productCategoryMapper.queryToatalCount();
+    @Override
+    public ProductCategory queryById(String cId) {
+        return BeanUtil.mapper(productCategoryMapper.selectByPrimaryKey(Integer.parseInt(cId)), ProductCategory.class);
+    }
+
+    private int queryToatalCount(int parentId) {
+        return productCategoryMapper.queryToatalCount(parentId);
     }
 
     private boolean checkBean(ProductCategoryModel productCategoryModel) {

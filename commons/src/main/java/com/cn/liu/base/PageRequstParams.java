@@ -13,6 +13,7 @@ public class PageRequstParams implements Serializable {
     private int page;//页码
     private String sort;//排序列名
     private String sortOrder;//排位命令（desc，asc）
+    private int parentId;
 
     public int getRows() {
         return rows;
@@ -44,5 +45,13 @@ public class PageRequstParams implements Serializable {
 
     public void setSortOrder(String sortOrder) {
         this.sortOrder = sortOrder;
+    }
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
     }
 }

@@ -186,20 +186,34 @@
     </update>
     <select id="queryToatalCount" resultType="java.lang.Integer">
         select count(1) from t_product_category where delete_mark = 1
+        <choose>
+            <when test="parentId != 0">
+                and parent_id = #{parentId}
+            </when>
+            <otherwise>
+                and parent_id is null
+            </otherwise>
+        </choose>
     </select>
     <select id="selectByList" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         from t_product_category
         where delete_mark = 1
+        <choose>
+            <when test="parentId != 0">
+                and parent_id = #{parentId}
+            </when>
+            <otherwise>
+                and parent_id is null
+            </otherwise>
+        </choose>
     </select>
-    <select id="queryCategoryList" resultMap="BaseResultMap">
+    <select id="queryCategoryList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from t_product_category
         where delete_mark = 1
-        <if test="parentId != null">
-            and parent_id = #{parentId}
-        </if>
+        and parent_id is null
     </select>
 </mapper>

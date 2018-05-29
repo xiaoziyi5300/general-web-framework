@@ -47,7 +47,13 @@ var pridcutCategoryFun = function () {
                 }, {
                     field: 'level',
                     title: '类目等级',
-                    sortable: true
+                    formatter: function (_value) {
+                        if (_value == 1) {
+                            return "一级";
+                        } else {
+                            return "二级";
+                        }
+                    }
                 }, {
                     field: 'createUserName',
                     title: '创建人'
@@ -62,15 +68,28 @@ var pridcutCategoryFun = function () {
                             return d.Format("yyyy-MM-dd hh:mm:ss");
                         }
                     }
-                }],
+                }, {
+                    field: 'id',
+                    title: '操作',
+                    width: 120,
+                    align: 'center',
+                    valign: 'middle',
+                    formatter: actionFormatter
+                },
+                ],
                 //注册加载子表的事件。注意下这里的三个参数！
                 onExpandRow: function (index, row, $detail) {
-                    //oInit.InitSubTable(index, row, $detail);
+                    new pridcutCategoryFun().showSecondCategory(index, row, $detail);
                 }
             }
         );
     },
         this.openDialog = function () {
+            this.selectCategory(null);
+            this.clearForm();
+            $('#myModalLabel').html("新增类目");
+            $('#pc').show();
+            $('#myModal').modal({backdrop: 'static', keyboard: false});
             $('#myModal').modal('show')
         },
         this.save = function () {
@@ -96,9 +115,107 @@ var pridcutCategoryFun = function () {
                     }
                 }
             });
+        },
+        this.selectDataById = function (_value) {
+            $.ajax({
+                url: "/api/productCategory/queryById",
+                cache: false,
+                type: 'POST',
+                dataType: 'json',
+                data: {cId: _value},
+                success: function (result) {
+                    if (result.status == 1) {
+                        var obj = result.productCategory;
+                        $('#myModalLabel').html("修改类目");
+                        $("#cId").val(obj.id);
+                        $("#CategoryName").val(obj.categoryName);
+                        if (obj.parentId) {
+                            new pridcutCategoryFun().selectCategory(null);
+                            $('#selectId').selectpicker('val', obj.parentId);
+                        } else {
+                            $('#pc').hide();
+                        }
+                        $("#categoryLevel").val(obj.level);
+                        $("#sort").val(obj.sort);
+                        $('#myModal').modal({backdrop: 'static', keyboard: false});
+                        $('#myModal').modal('show')
+                    } else {
+                        alert(result.message);
+                    }
+                }
+            });
+        },
+        this.selectCategory = function (value) {
+            $.ajax({
+                url: "/api/productCategory/queryCategoryList",
+                cache: false,
+                type: 'POST',
+                dataType: 'json',
+                data: {parentId: value == null ? 0 : value},
+                success: function (result) {
+                    if (result.status == 1) {
+                        $("div[name='parentMenu']").empty();
+                        var cList = result.list;
+                        var _html = '<select class="selectpicker" id="selectId" ><option value="">请选择</option>';
+                        if (cList) {
+                            for (var i = 0; i < cList.length; i++) {
+                                _html += '<option value=' + cList[i].id + '>' + cList[i].categoryName + '</option>';
+                            }
+                            _html += '</select>';
+                        }
+                        $("div[name='parentMenu']").append(_html);
+                        $(".selectpicker").selectpicker('refresh');
+                    }
+                }
+            });
+        },
+        this.showSecondCategory = function (index, row, $detail) {
+            var parentId = row.id;
+            var cur_table = $detail.html('<table id="secondTable"></table>').find('table');
+            $(cur_table).bootstrapTable({
+                url: '/api/productCategory/queryListByPage',
+                method: 'post',
+                queryParams: {parentId: parentId, rows: 100, page: 1},
+                ajaxOptions: {parentId: parentId},
+                clickToSelect: true,
+                detailView: false,//父子表
+                contentType: "application/x-www-form-urlencoded",
+                uniqueId: "id",
+                pageSize: 100,
+                pageList: [10, 25],
+                columns: [{
+                    checkbox: true,
+                }, {
+                    field: 'categoryName',
+                    title: '类目名称'
+                }, {
+                    field: 'level',
+                    title: '类目等级'
+                }, {
+                    field: 'createUserName',
+                    title: '创建人'
+                }, {
+                    field: 'createDate',
+                    title: '创建时间',
+                    formatter: function (value) {
+                        if (value != null) {
+                            var re = /-?\d+/;
+                            var m = re.exec(val);
+                            var d = new Date(parseInt(m[0]));
+                            return d.Format("yyyy-MM-dd hh:mm:ss");
+                        }
+                    }
+                }]
+            });
+        },
+        this.clearForm = function () {
+            $("#cId").val("");
+            $("#CategoryName").val("");
+            $('#selectId').selectpicker('val', "");
+            $("#categoryLevel").val("");
+            $("#sort").val("");
         }
 }
-
 Date.prototype.Format = function (fmt) {
     var o = {
         "M+": this.getMonth() + 1, //月份
@@ -114,3 +231,30 @@ Date.prototype.Format = function (fmt) {
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 };
+
+//操作栏的格式化
+function actionFormatter(value, row, index) {
+    var id = value;
+    var result = "";
+    result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"new pridcutCategoryFun().selectDataById('" + id + "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
+    result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"deleteByIds('" + id + "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
+    return result;
+}
+
+//删除
+function deleteByIds(id) {
+    layer.confirm('您确定要删除这条数据吗？', {btn: ['确定', '取消']}, function (index) {
+        layer.close(index);
+        $.ajax({
+            type: "post",
+            url: "/api/productCategory/delete",
+            data: {
+                "cId": id
+            },
+            success: function (data) {
+                $("#table").bootstrapTable('refresh', {url: '/api/productCategory/queryListByPage'});
+                layer.alert('删除成功');
+            }
+        });
+    });
+}

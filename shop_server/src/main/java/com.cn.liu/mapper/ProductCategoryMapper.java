@@ -24,9 +24,9 @@ public interface ProductCategoryMapper {
 
     void deleteById(int id);
 
-    int queryToatalCount();
+    int queryToatalCount(@Param("parentId") int parentId);
 
-    List<ProductCategoryModel> selectByList();
+    List<ProductCategoryModel> selectByList(@Param("parentId") int parentId);
 
-    List<ProductCategory> queryCategoryList(int parentId);
+    List<ProductCategory> queryCategoryList(@Param("parentId") int parentId);
 }

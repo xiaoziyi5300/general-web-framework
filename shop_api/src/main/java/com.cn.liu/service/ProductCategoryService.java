@@ -22,4 +22,6 @@ public interface ProductCategoryService {
     PageBean<ProductCategory> queryListByPage(PageRequstParams pageRequstParams);
 
     List<ProductCategory> queryCategoryList(int parentId);
+
+    ProductCategory queryById(String cId);
 }

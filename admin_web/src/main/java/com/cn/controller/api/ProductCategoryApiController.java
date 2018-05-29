@@ -7,6 +7,7 @@ import com.cn.liu.base.ReponseDto;
 import com.cn.liu.constant.CommonConstant;
 import com.cn.liu.dto.ProductCategory;
 import com.cn.liu.service.ProductCategoryService;
+import com.cn.liu.util.StrUtil;
 import com.cn.util.PageRequetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,8 +36,8 @@ public class ProductCategoryApiController {
      * @return
      */
     @RequestMapping(value = "/queryListByPage", method = RequestMethod.POST)
-    public PageBean<ProductCategory> queryListByPage(HttpServletRequest request) {
-        return productCategoryService.queryListByPage(PageRequetUtil.getPageRequest(request));
+    public PageBean<ProductCategory> queryListByPage(PageRequstParams pageRequstParams, HttpServletRequest request) {
+        return productCategoryService.queryListByPage(pageRequstParams);
     }
 
     /****
@@ -63,11 +64,39 @@ public class ProductCategoryApiController {
      * @return
      */
     @RequestMapping(value = "/queryCategoryList", method = RequestMethod.POST)
-    public CategoryReponseDto queryCategoryList(int parentId) {
+    public CategoryReponseDto queryCategoryList(String parentId) {
         CategoryReponseDto categoryReponseDto = new CategoryReponseDto();
-        categoryReponseDto.setList(productCategoryService.queryCategoryList(parentId));
+        categoryReponseDto.setList(productCategoryService.queryCategoryList(Integer.parseInt(parentId)));
         categoryReponseDto.setMessage(CommonConstant.SUCCESS_MESSAGE);
         categoryReponseDto.setStatus(CommonConstant.SUCCESS_STATUS);
         return categoryReponseDto;
+    }
+
+    /***
+     *
+     * @param cId
+     * @return
+     */
+    @RequestMapping(value = "/queryById", method = RequestMethod.POST)
+    public CategoryReponseDto queryById(String cId) {
+        CategoryReponseDto dto = new CategoryReponseDto();
+        dto.setProductCategory(productCategoryService.queryById(cId));
+        dto.setMessage(CommonConstant.SUCCESS_MESSAGE);
+        dto.setStatus(CommonConstant.SUCCESS_STATUS);
+        return dto;
+    }
+
+    /***
+     * 删除
+     * @param cId
+     * @return
+     */
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ReponseDto delete(String cId) {
+        CategoryReponseDto dto = new CategoryReponseDto();
+        productCategoryService.deleteById(Integer.parseInt(cId));
+        dto.setMessage(CommonConstant.SUCCESS_MESSAGE);
+        dto.setStatus(CommonConstant.SUCCESS_STATUS);
+        return dto;
     }
 }

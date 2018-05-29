@@ -18,8 +18,6 @@
 <div>
     <h4>
         <button id="save-btn" data-loading-text="loading..." class="btn btn-primary">新增类目</button>
-        <button id="update-btn" data-loading-text="loading..." class="btn btn-primary">修改类目</button>
-        <button id="delete-btn" data-loading-text="loading..." class="btn btn-primary">删除类目</button>
     </h4>
     <table id="table">
     </table>
@@ -41,15 +39,15 @@
                                placeholder="请输入类目名称">
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="pc">
                     <label for="CategoryName" class="col-sm-3 control-label">选择父节点:</label>
                     <div class="col-sm-6" name="parentMenu">
-                        <select class="selectpicker" id="selectId">
-                            <option value="">请选择</option>
-                            <option value="1">Mustard</option>
-                            <option value="2">Ketchup</option>
-                            <option value="3">Relish</option>
-                        </select>
+                        <%--  <select class="selectpicker" id="selectId">
+                              <option value="">请选择</option>
+                              <option value="1">Mustard</option>
+                              <option value="2">Ketchup</option>
+                              <option value="3">Relish</option>
+                          </select>--%>
                     </div>
                 </div>
                 <div class="form-group">
