@@ -73,7 +73,7 @@
                 for (var i = 0; i < result.length; i++) {
                     var _frist = result[i];
                     secondHtml = '';
-                    fristHtml += '\'<li class="hasList"> <div class="hasicon"><span class="glyphicon glyphicon-home"></span><span>' + _frist.menuName + '</span><span class="glyphicon pull-right glyphicon-chevron-down cur"></span> </div> <ul class="menu">'
+                    fristHtml += '<li class="hasList"> <div class="hasicon"><span class="glyphicon glyphicon-home"></span><span>' + _frist.menuName + '</span><span class="glyphicon pull-right glyphicon-chevron-down cur"></span> </div> <ul class="menu">'
                     var secondList = _frist.childList;
                     if (secondList.length != 0) {
                         for (var j = 0; j < secondList.length; j++) {
