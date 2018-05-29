@@ -7,16 +7,11 @@ import com.cn.liu.base.ReponseDto;
 import com.cn.liu.constant.CommonConstant;
 import com.cn.liu.dto.ProductCategory;
 import com.cn.liu.service.ProductCategoryService;
-import com.cn.liu.util.StrUtil;
-import com.cn.util.PageRequetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 /**
  * @author lzf
@@ -32,11 +27,11 @@ public class ProductCategoryApiController {
 
     /***
      * 商品类目分页显示
-     * @param request
+     * @param
      * @return
      */
     @RequestMapping(value = "/queryListByPage", method = RequestMethod.POST)
-    public PageBean<ProductCategory> queryListByPage(PageRequstParams pageRequstParams, HttpServletRequest request) {
+    public PageBean<ProductCategory> queryListByPage(PageRequstParams pageRequstParams) {
         return productCategoryService.queryListByPage(pageRequstParams);
     }
 
