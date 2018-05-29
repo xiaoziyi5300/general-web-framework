@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 /**
  * @author lzf
  * desc
@@ -37,5 +41,15 @@ public class HomeApiController {
             dto.setMessage("登陆成功");
         }
         return dto;
+    }
+
+    /***
+     * 退出
+     * @param request
+     * @return
+     */
+    @RequestMapping("/loginOut")
+    public void loginOut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.sendRedirect("/login.jsp");
     }
 }

@@ -40,10 +40,7 @@
                         <a role="menuitem" tabindex="-1" href="#">关于我们</a>
                     </li>
                     <li role="presentation">
-                        <a role="menuitem" tabindex="-1" href="#">项目仓库</a>
-                    </li>
-                    <li role="presentation">
-                        <a role="menuitem" tabindex="-1" href="#">退出登录</a>
+                        <a role="menuitem" tabindex="-1" href="/api/home/loginOut">退出登录</a>
                     </li>
                 </ul>
             </div>
