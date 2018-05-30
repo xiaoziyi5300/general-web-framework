@@ -96,9 +96,12 @@ var pridcutCategoryFun = function () {
             var obj = {};
             obj.id = $("#cId").val();
             obj.categoryName = $("#CategoryName").val();
-            obj.parentId = $('#selectId').selectpicker('val');
+            if (!$("#cId").attr("attrValue")) {
+                obj.parentId = $('#selectId').selectpicker('val');
+            }
             obj.level = $("#categoryLevel").val();
             obj.sort = $("#sort").val();
+            if (!ckeckForm(obj)) return;
             $.ajax({
                 url: "/api/productCategory/save",
                 cache: false,
@@ -133,6 +136,7 @@ var pridcutCategoryFun = function () {
                             new pridcutCategoryFun().selectCategory(null);
                             $('#selectId').selectpicker('val', obj.parentId);
                         } else {
+                            $("#cId").attr("attrValue", "1");
                             $('#pc').hide();
                         }
                         $("#categoryLevel").val(obj.level);
@@ -214,6 +218,7 @@ var pridcutCategoryFun = function () {
             $('#selectId').selectpicker('val', "");
             $("#categoryLevel").val("");
             $("#sort").val("");
+            $("#cId").attr("attrValue", "");
         }
 }
 Date.prototype.Format = function (fmt) {
@@ -232,6 +237,16 @@ Date.prototype.Format = function (fmt) {
     return fmt;
 };
 
+function ckeckForm(obj) {
+    var flag = true;
+    if (!obj.categoryName) {
+        flag = false;
+    }
+    if (!obj.level) {
+        flag = false;
+    }
+    return flag;
+}
 //操作栏的格式化
 function actionFormatter(value, row, index) {
     var id = value;
