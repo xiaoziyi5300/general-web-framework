@@ -1,16 +1,21 @@
 package com.cn.controller.api;
 
+import com.cn.controller.BaseController;
 import com.cn.dto.category.CategoryReponseDto;
 import com.cn.liu.base.PageBean;
 import com.cn.liu.base.PageRequstParams;
 import com.cn.liu.base.ReponseDto;
 import com.cn.liu.constant.CommonConstant;
 import com.cn.liu.dto.ProductCategory;
+import com.cn.liu.dto.User;
 import com.cn.liu.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 
 /**
@@ -20,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/productCategory")
-public class ProductCategoryApiController {
+public class ProductCategoryApiController extends BaseController {
 
     @Autowired(required = false)
     private ProductCategoryService productCategoryService;
@@ -41,9 +46,13 @@ public class ProductCategoryApiController {
      * @return
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ReponseDto save(ProductCategory productCategory) {
+    public ReponseDto save(ProductCategory productCategory, HttpServletRequest request) {
         ReponseDto reponseDto = new ReponseDto();
+        User user = geeUserInfo(request);
         if (productCategory.getId() == null) {
+            productCategory.setCreateUserId(String.valueOf(user.getId()));
+            productCategory.setCreateDate(new Date());
+            productCategory.setCreateUserName(user.getUserName());
             productCategoryService.save(productCategory);
         } else {
             productCategoryService.update(productCategory);

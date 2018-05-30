@@ -1,8 +1,12 @@
 package com.cn.controller.api;
 
+import com.alibaba.fastjson.JSON;
+import com.cn.controller.BaseController;
 import com.cn.dto.menu.MenuReponseDto;
 import com.cn.liu.base.ReponseDto;
 import com.cn.liu.constant.CommonConstant;
+import com.cn.liu.util.ListUtils;
+import com.cn.liu.util.RedisUtil;
 import com.cn.model.Menu;
 import com.cn.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +23,13 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/menu")
-public class MenuApiController {
+public class MenuApiController extends BaseController {
 
 
     @Autowired
     private MenuService menuService;
+    @Autowired
+    private RedisUtil redisUtil;
 
     /***
      * 保存或修改
@@ -76,6 +82,13 @@ public class MenuApiController {
      */
     @RequestMapping("/queryMenuList")
     public List<Menu> queryMenuList() {
-        return menuService.queryMenuList();
+        List<Menu> menuList = null;
+        if (redisUtil.get("menuList") == null) {
+            menuList = menuService.queryMenuList();
+            redisUtil.set("menuList", JSON.toJSONString(menuList), 86400L);
+        } else {
+            menuList = JSON.parseArray(redisUtil.get("menuList").toString(), Menu.class);
+        }
+        return menuList;
     }
 }

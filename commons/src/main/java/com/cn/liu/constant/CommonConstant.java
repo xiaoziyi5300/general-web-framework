@@ -28,4 +28,6 @@ public class CommonConstant {
     public static final String SECRET_KEY ="apple.com";
 
     public static final String SUCCESS_MESSAGE = "操作成功";
+
+    public static final String TOKEN_KEY = "loginInfo_";
 }

@@ -63,7 +63,7 @@ var pridcutCategoryFun = function () {
                     formatter: function (value) {
                         if (value != null) {
                             var re = /-?\d+/;
-                            var m = re.exec(val);
+                            var m = re.exec(value);
                             var d = new Date(parseInt(m[0]));
                             return d.Format("yyyy-MM-dd hh:mm:ss");
                         }
@@ -200,7 +200,7 @@ var pridcutCategoryFun = function () {
                     formatter: function (value) {
                         if (value != null) {
                             var re = /-?\d+/;
-                            var m = re.exec(val);
+                            var m = re.exec(value);
                             var d = new Date(parseInt(m[0]));
                             return d.Format("yyyy-MM-dd hh:mm:ss");
                         }
