@@ -48,7 +48,7 @@ public class ProductCategoryApiController extends BaseController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ReponseDto save(ProductCategory productCategory, HttpServletRequest request) {
         ReponseDto reponseDto = new ReponseDto();
-        User user = geeUserInfo(request);
+        User user = getUserInfo(request);
         if (productCategory.getId() == null) {
             productCategory.setCreateUserId(String.valueOf(user.getId()));
             productCategory.setCreateDate(new Date());

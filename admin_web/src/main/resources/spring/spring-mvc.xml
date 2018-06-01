@@ -51,12 +51,14 @@
         <!-- 内存中的最大值 -->
         <property name="maxInMemorySize" value="40960"/>
     </bean>
+    <mvc:resources mapping="/ztree/**" location="/ztree/"/>
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/css/**"/>
             <mvc:exclude-mapping path="/img/**"/>
             <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/ztree/**"/>
             <mvc:exclude-mapping path="/login.jsp"/>
             <mvc:exclude-mapping path="/api/home/login"/>
             <mvc:exclude-mapping path="/api/home/loginOut"/>

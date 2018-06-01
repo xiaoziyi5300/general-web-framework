@@ -1,12 +1,10 @@
 package com.cn.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.cn.liu.constant.CommonConstant;
 import com.cn.liu.dto.User;
 import com.cn.liu.exception.BusinessException;
 import com.cn.liu.util.JackSonUtil;
 import com.cn.liu.util.RedisUtil;
-import com.cn.liu.util.StrUtil;
 import com.cn.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,13 +20,17 @@ public class BaseController {
     @Autowired
     private RedisUtil redisUtil;
 
-    public User geeUserInfo(HttpServletRequest request) {
+    public User getUserInfo(HttpServletRequest request) {
         try {
             String cookie = CookieUtil.getUserInfo(request);
             User user = JackSonUtil.getObject(redisUtil.get(CommonConstant.TOKEN_KEY + cookie).toString(), User.class);
+            if (user == null) {
+                throw new BusinessException("用户未登录");
+            }
             return user;
         } catch (Exception ex) {
-            throw new BusinessException("用户未登录");
+            ex.printStackTrace();
         }
+        return null;
     }
 }

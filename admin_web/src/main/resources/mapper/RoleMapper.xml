@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.cn.model.Role">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+        <result column="memo" property="memo" jdbcType="VARCHAR"/>
+        <result column="delete_mark" property="deleteMark" jdbcType="INTEGER"/>
+        <result column="create_user_name" property="createUserName" jdbcType="VARCHAR"/>
+        <result column="create_user_id" property="createUserId" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="DATE"/>
+        <result column="modify_user_name" property="modifyUserName" jdbcType="VARCHAR"/>
+        <result column="modify_user_id" property="modifyUserId" jdbcType="INTEGER"/>
+        <result column="modify_date" property="modifyDate" jdbcType="DATE"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, role_name, memo, delete_mark, create_user_name, create_user_id, create_date,
+        modify_user_name, modify_user_id, modify_date
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_role
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        update t_role set delete_mark = 0
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <insert id="insert" parameterType="com.cn.model.Role">
+        insert into t_role (id, role_name, memo,
+        delete_mark, create_user_name, create_user_id,
+        create_date, modify_user_name, modify_user_id,
+        modify_date)
+        values (#{id,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR},
+        #{deleteMark,jdbcType=INTEGER}, #{createUserName,jdbcType=VARCHAR}, #{createUserId,jdbcType=INTEGER},
+        #{createDate,jdbcType=DATE}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyUserId,jdbcType=INTEGER},
+        #{modifyDate,jdbcType=DATE})
+    </insert>
+    <insert id="insertSelective" parameterType="com.cn.model.Role">
+        insert into t_role
+        <selectKey resultType="java.lang.Integer" keyProperty="id"
+                   order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="roleName != null">
+                role_name,
+            </if>
+            <if test="memo != null">
+                memo,
+            </if>
+            <if test="deleteMark != null">
+                delete_mark,
+            </if>
+            <if test="createUserName != null">
+                create_user_name,
+            </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="modifyUserName != null">
+                modify_user_name,
+            </if>
+            <if test="modifyUserId != null">
+                modify_user_id,
+            </if>
+            <if test="modifyDate != null">
+                modify_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="roleName != null">
+                #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="memo != null">
+                #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="deleteMark != null">
+                #{deleteMark,jdbcType=INTEGER},
+            </if>
+            <if test="createUserName != null">
+                #{createUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=DATE},
+            </if>
+            <if test="modifyUserName != null">
+                #{modifyUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyUserId != null">
+                #{modifyUserId,jdbcType=INTEGER},
+            </if>
+            <if test="modifyDate != null">
+                #{modifyDate,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.cn.model.Role">
+        update t_role
+        <set>
+            <if test="roleName != null">
+                role_name = #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="memo != null">
+                memo = #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="deleteMark != null">
+                delete_mark = #{deleteMark,jdbcType=INTEGER},
+            </if>
+            <if test="createUserName != null">
+                create_user_name = #{createUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserId != null">
+                create_user_id = #{createUserId,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=DATE},
+            </if>
+            <if test="modifyUserName != null">
+                modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyUserId != null">
+                modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate,jdbcType=DATE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.cn.model.Role">
+        update t_role
+        set role_name = #{roleName,jdbcType=VARCHAR},
+        memo = #{memo,jdbcType=VARCHAR},
+        delete_mark = #{deleteMark,jdbcType=INTEGER},
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+        create_date = #{createDate,jdbcType=DATE},
+        modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+        modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+        modify_date = #{modifyDate,jdbcType=DATE}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="totalCount" resultType="java.lang.Integer">
+        select count(1) from t_role where delete_mark = 1
+    </select>
+
+    <select id="selectByList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_role
+        where delete_mark =1 order by id desc
+    </select>
+</mapper>
