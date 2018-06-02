@@ -1,9 +1,12 @@
 package com.cn.controller.api;
 
+import com.alibaba.fastjson.JSON;
 import com.cn.controller.BaseController;
 import com.cn.dto.role.RoleReponseDto;
 import com.cn.dto.role.ZtreeReponseDto;
+import com.cn.liu.util.JackSonUtil;
 import com.cn.liu.util.ListUtils;
+import com.cn.liu.util.StrUtil;
 import com.cn.model.Menu;
 import com.cn.model.Role;
 import com.cn.liu.base.PageBean;
@@ -50,24 +53,27 @@ public class RoleApiController extends BaseController {
     /***
      * 保存或修改
      * @param request
-     * @param role
+     * @param strData
      * @return
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ReponseDto save(HttpServletRequest request, Role role) {
+    public ReponseDto save(HttpServletRequest request, String strData) throws Exception {
         ReponseDto dto = new ReponseDto();
-        User user = getUserInfo(request);
-        Date now = new Date();
-        if (role.getId() == null) {
-            role.setCreateDate(now);
-            role.setCreateUserId(user.getId());
-            role.setCreateUserName(user.getUserName());
-            roleService.save(role);
-        } else {
-            role.setModifyDate(now);
-            role.setModifyUserId(user.getId());
-            role.setModifyUserName(user.getUserName());
-            roleService.update(role);
+        if (StrUtil.isNotEmpty(strData)) {
+            User user = getUserInfo(request);
+            Date now = new Date();
+            Role role = JackSonUtil.getObject(strData, Role.class);
+            if (role.getId() == null) {
+                role.setCreateDate(now);
+                role.setCreateUserId(user.getId());
+                role.setCreateUserName(user.getUserName());
+                roleService.save(role);
+            } else {
+                role.setModifyDate(now);
+                role.setModifyUserId(user.getId());
+                role.setModifyUserName(user.getUserName());
+                roleService.update(role);
+            }
         }
         dto.setStatus(CommonConstant.SUCCESS_STATUS);
         dto.setMessage(CommonConstant.SUCCESS_MESSAGE);

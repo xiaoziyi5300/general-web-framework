@@ -20,4 +20,6 @@ public interface RoleMapper {
     int totalCount();
 
     List<Role> selectByList();
+
+    int queryRoleByName(String roleName);
 }

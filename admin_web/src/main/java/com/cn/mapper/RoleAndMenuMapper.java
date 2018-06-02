@@ -12,5 +12,7 @@ public interface RoleAndMenuMapper {
 
     void deleteByRoleId(String rId);
 
-    void save(@Param("id") Integer id, @Param("list") List<String> menuIds);
+    void save(@Param("list") List<RoleAndMenu> roleAndMenuList);
+
+    List<RoleAndMenu> queryListByRoleId(String rId);
 }

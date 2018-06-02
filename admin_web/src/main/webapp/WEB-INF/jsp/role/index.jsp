@@ -20,6 +20,8 @@
 <div>
     <h4>
         <button id="save-btn" data-loading-text="loading..." class="btn btn-primary">新增角色</button>
+        <button id="update-btn" data-loading-text="loading..." class="btn btn-primary">修改角色</button>
+        <button id="delete-btn" data-loading-text="loading..." class="btn btn-primary">删除角色</button>
     </h4>
     <div class="testClass">
         <table id="role_table">
@@ -28,7 +30,7 @@
 
 </div>
 <!-- 模态框（Modal） -->
-<input type="hidden" id="cId" attrValue=""/>
+<input type="hidden" id="cId"/>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -38,20 +40,20 @@
             </div>
             <form class="form-horizontal" role="form">
                 <div class="form-group" style="margin-top: 16px;">
-                    <label for="CategoryName" class="col-sm-3 control-label">角色名称:</label>
+                    <label for="RoleName" class="col-sm-3 control-label">角色名称:</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" id="CategoryName"
+                        <input type="text" class="form-control" id="RoleName"
                                placeholder="请输入类目名称">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="CategoryName" class="col-sm-3 control-label">备注:</label>
+                    <label for="RoleName" class="col-sm-3 control-label">备注:</label>
                     <div class="col-sm-5">
                         <textarea class="form-control" rows="3" id="memo"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="CategoryName" class="col-sm-3 control-label">选择菜单:</label>
+                    <label for="RoleName" class="col-sm-3 control-label">选择菜单:</label>
                     <div style=" height:231px;width:252px; overflow-y:auto">
                         <div class="col-sm-5">
                             <ul id="treeDemo" class="ztree"></ul>

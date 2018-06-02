@@ -165,4 +165,8 @@
         from t_role
         where delete_mark =1 order by id desc
     </select>
+
+    <select id="queryRoleByName" resultType="java.lang.Integer">
+        select count(1) from t_role where role_name = #{roleName} and delete_mark = 1
+    </select>
 </mapper>

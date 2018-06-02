@@ -10,9 +10,31 @@ var setting = {
 };
 $(function () {
     new roleFun().initData();
+    //初始化菜单树
+    new roleFun().selectRoleList();
+    //新增
     $(document).on('click', '#save-btn', function () {
         new roleFun().openDialog();
     });
+    //修改
+    $(document).on('click', '#update-btn', function () {
+        var _select = $("#role_table").bootstrapTable('getSelections');
+        if (_select.length == 0) {
+            layer.alert('未选中数据');
+        } else {
+            new roleFun().selectDataById(_select[0].id);
+        }
+    });
+    //删除
+    $(document).on('click', '#delete-btn', function () {
+        var _select = $("#role_table").bootstrapTable('getSelections');
+        if (_select.length == 0) {
+            layer.alert('未选中数据');
+        } else {
+            deleteByIds(_select[0].id);
+        }
+    });
+
     $(document).on('click', '#save', function () {
         new roleFun().save();
     });
@@ -35,6 +57,7 @@ var roleFun = function () {
                 pageSize: 10,                     //每页的记录行数（*）
                 pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
                 clickToSelect: true,                //是否启用点击选中行
+            singleSelect: true,
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
                 smartDisplay: false,
                 queryParams: function (params) {
@@ -58,7 +81,13 @@ var roleFun = function () {
                         title: '角色备注'
                     }, {
                         field: 'deleteMark',
-                        title: '状态'
+                        title: '状态',
+                        formatter: function (value) {
+                            if (parseInt(value) == 1) {
+                                return "正常";
+                            }
+                            return "禁用";
+                        }
                     }, {
                         field: 'createDate',
                         title: '创建时间',
@@ -70,80 +99,75 @@ var roleFun = function () {
                                 return d.Format("yyyy-MM-dd hh:mm:ss");
                             }
                         }
-                    }/*, {
-                    field: 'id',
-                    title: '操作',
-                    width: 120,
-                    align: 'center',
-                    valign: 'middle',
-                    formatter: actionFormatter
-                },*/
+                    }
                 ]
             }
         );
     },
         this.openDialog = function () {
-            this.selectRoleList();
-            //this.clearForm();
+            this.clearForm();
             $('#myModalLabel').html("新增角色");
             $('#myModal').modal({backdrop: 'static', keyboard: false});
             $('#myModal').modal('show')
         },
         this.save = function () {
-            debugger;
             var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
             var nodes = treeObj.getCheckedNodes(true);
-            console.log(nodes);
-
-
-            /* var obj = {};
-             obj.id = $("#cId").val();
-             obj.categoryName = $("#CategoryName").val();
-             if (!$("#cId").attr("attrValue")) {
-                 obj.parentId = $('#selectId').selectpicker('val');
-             }
-             obj.level = $("#categoryLevel").val();
-             obj.sort = $("#sort").val();
-             if (!ckeckForm(obj)) return;
+            var obj = {};
+            obj.id = $('#cId').val();
+            obj.roleName = $('#RoleName').val();
+            obj.memo = $('#memo').val();
+            var arr = new Array();
+            if (nodes) {
+                for (var i = 0; i < nodes.length; i++) {
+                    arr.push(nodes[i].id);
+                }
+            }
+            obj.menuIds = arr;
+            if (!obj.roleName || obj.menuIds.length == 0) return;
              $.ajax({
-                 url: "/api/productCategory/save",
+                 url: "/api/role/save",
                  cache: false,
                  type: 'POST',
                  dataType: 'json',
-                 data: obj,
+                 data: {
+                     strData: JSON.stringify(obj)
+                 },
                  success: function (result) {
                      if (result.status == 1) {
                          alert('操作成功');
-                         $("#role_table").bootstrapTable('refresh', {url: '/api/productCategory/queryListByPage'});
+                         $("#role_table").bootstrapTable('refresh', {url: '/api/role/queryListByPage'});
                          $('#myModal').modal('hide');
                      } else {
                          alert(result.message);
                      }
                  }
-             });*/
+             });
         },
         this.selectDataById = function (_value) {
             $.ajax({
-                url: "/api/productCategory/queryById",
+                url: "/api/role/queryById",
                 cache: false,
                 type: 'POST',
                 dataType: 'json',
-                data: {cId: _value},
+                data: {rId: _value},
                 success: function (result) {
                     if (result.status == 1) {
-                        var obj = result.productCategory;
-                        $('#myModalLabel').html("修改类目");
+                        var obj = result.role;
+                        $("#RoleName").val(obj.roleName);
+                        $("#memo").val(obj.memo);
                         $("#cId").val(obj.id);
-                        $("#CategoryName").val(obj.categoryName);
-                        if (obj.parentId) {
-                            new roleFun().selectCategory(null);
-                            $('#selectId').selectpicker('val', obj.parentId);
-                        } else {
-                            $("#cId").attr("attrValue", "1");
-                            $('#pc').hide();
+                        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+                        var nodes = treeObj.transformToArray(treeObj.getNodes());
+                        var menuList = obj.menuIds;
+                        for (var i = 0; i < nodes.length; i++) {
+                            for (var j = 0; j < menuList.length; j++) {
+                                if (nodes[i].id == menuList[j]) {
+                                    nodes[i].checked = true;
+                                    treeObj.updateNode(nodes[i], true);
+                                }
+                            }
                         }
-                        $("#categoryLevel").val(obj.level);
-                        $("#sort").val(obj.sort);
                         $('#myModal').modal({backdrop: 'static', keyboard: false});
                         $('#myModal').modal('show')
                     } else {
@@ -159,7 +183,6 @@ var roleFun = function () {
                 type: 'POST',
                 dataType: 'json',
                 success: function (result) {
-                    console.log(result);
                     var zNodes = result;
                     zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
                 }
@@ -167,11 +190,10 @@ var roleFun = function () {
         }
     this.clearForm = function () {
         $("#cId").val("");
-        $("#CategoryName").val("");
-        $('#selectId').selectpicker('val', "");
-        $("#categoryLevel").val("");
-        $("#sort").val("");
-        $("#cId").attr("attrValue", "");
+        $("#RoleName").val("");
+        $("#memo").val("");
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+        treeObj.checkAllNodes(false);
     }
 }
 Date.prototype.Format = function (fmt) {
@@ -201,27 +223,18 @@ function ckeckForm(obj) {
     return flag;
 }
 
-//操作栏的格式化
-function actionFormatter(value, row, index) {
-    var id = value;
-    var result = "";
-    result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"new roleFun().selectDataById('" + id + "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
-    result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"deleteByIds('" + id + "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
-    return result;
-}
-
 //删除
 function deleteByIds(id) {
     layer.confirm('您确定要删除这条数据吗？', {btn: ['确定', '取消']}, function (index) {
         layer.close(index);
         $.ajax({
             type: "post",
-            url: "/api/productCategory/delete",
+            url: "/api/role/delete",
             data: {
-                "cId": id
+                "rId": id
             },
             success: function (data) {
-                $("#table").bootstrapTable('refresh', {url: '/api/productCategory/queryListByPage'});
+                $("#role_table").bootstrapTable('refresh', {url: '/api/role/queryListByPage'});
                 layer.alert('删除成功');
             }
         });

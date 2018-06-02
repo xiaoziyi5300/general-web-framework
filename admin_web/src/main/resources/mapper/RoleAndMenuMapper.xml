@@ -39,14 +39,18 @@
     </insert>
 
     <delete id="deleteByRoleId">
-        delete t_role_menu where role_id = #{rId}
+        delete from t_role_menu where role_id = #{rId}
     </delete>
 
-    <insert id="save">
-        INSERT INTO `t_role_menu` ( id, roleId ,menu_id)
+    <insert id="save" parameterType="java.util.List">
+        INSERT INTO `t_role_menu` ( id,role_id ,menu_id)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            ( #{id}, #{item})
+            (#{item.id},#{item.roleId} ,#{item.menuId})
         </foreach>
     </insert>
+
+    <select id="queryListByRoleId" resultMap="BaseResultMap">
+        select * from t_role_menu where role_id =#{rId}
+    </select>
 </mapper>
