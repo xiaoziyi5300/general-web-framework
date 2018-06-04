@@ -138,7 +138,6 @@ public class TestMain {
             stmt = connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery(sql);
             ResultSetMetaData data = rs.getMetaData();
-
             while (rs.next()) {
                 if (attrList.size() != data.getColumnCount()) {
                     for (int i = 1; i <= data.getColumnCount(); i++) {
