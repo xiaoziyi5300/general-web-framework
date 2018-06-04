@@ -1,6 +1,5 @@
 package com.cn.service.impl;
 
-import com.cn.liu.dto.ProductCategory;
 import com.cn.liu.exception.BusinessException;
 import com.cn.liu.util.BeanUtil;
 import com.cn.liu.util.ListUtils;
@@ -15,8 +14,6 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.swing.plaf.nimbus.NimbusStyle;
 import java.util.ArrayList;
 import java.util.List;
 
