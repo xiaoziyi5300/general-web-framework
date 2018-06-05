@@ -24,10 +24,25 @@ public class HomeController {
         return mv;
     }
 
+    /***
+     *欢迎页面
+     * @return
+     */
     @RequestMapping("/welcome")
     public ModelAndView welcome() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/welcome");
+        return mv;
+    }
+
+    /***
+     * 代码生成页面
+     * @return
+     */
+    @RequestMapping("/generateCode")
+    public ModelAndView generateCode() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/generateCode");
         return mv;
     }
 }

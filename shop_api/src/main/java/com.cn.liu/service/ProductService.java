@@ -1,8 +1,8 @@
 package com.cn.liu.service;
 
+import com.cn.liu.base.PageBean;
 import com.cn.liu.base.PageRequstParams;
 import com.cn.liu.dto.Product;
-import com.github.pagehelper.Page;
 
 /**
  * @author lzf
@@ -17,5 +17,5 @@ public interface ProductService {
 
     public void delete(int pId);
 
-    Page<Product> queryListByPage(PageRequstParams pageRequstParams);
+    PageBean<Product> queryListByPage(PageRequstParams pageRequstParams);
 }

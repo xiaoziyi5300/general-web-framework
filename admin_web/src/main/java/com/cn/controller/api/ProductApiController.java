@@ -1,6 +1,7 @@
 package com.cn.controller.api;
 
 import com.cn.controller.BaseController;
+import com.cn.liu.base.PageBean;
 import com.cn.liu.base.PageRequstParams;
 import com.cn.liu.base.ReponseDto;
 import com.cn.liu.constant.CommonConstant;
@@ -35,7 +36,7 @@ public class ProductApiController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/queryListByPage", method = RequestMethod.POST)
-    public Page<Product> queryListByPage(PageRequstParams PpgeRequstParams) {
+    public PageBean<Product> queryListByPage(PageRequstParams PpgeRequstParams) {
         return productService.queryListByPage(PpgeRequstParams);
     }
 

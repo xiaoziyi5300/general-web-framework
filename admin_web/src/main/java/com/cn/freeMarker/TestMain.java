@@ -1,14 +1,10 @@
 package com.cn.freeMarker;
 
-import com.cn.liu.util.StrUtil;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
-
-import javax.management.Attribute;
 import java.io.*;
-import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
@@ -20,6 +16,11 @@ import java.util.Date;
  */
 public class TestMain {
 
+    public static final String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/my_shop?autoReconnect=true&useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true";
+    public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    public static final String NAME = "root";
+    public static final String PASSWORD = "111111";
+
     public static void main(String[] args) throws Exception {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
         cfg.setTemplateLoader(new ClassTemplateLoader(TestMain.class, "/freeMarker"));
@@ -30,11 +31,18 @@ public class TestMain {
         root.put("date", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         TestMain testMain = new TestMain();
         String filePath = "F:/Freemarker/src/";
-        testMain.generateController(root, cfg, "order", filePath);
-        testMain.generateApiController(root, cfg, "order", filePath + "api");
-        testMain.generateService(root, cfg, "order", filePath + "service");
-        testMain.generateServiceImpl(root, cfg, "order", filePath + "service/impl", "用户已经被使用了");
-        testMain.generateModel(root, cfg, "order", filePath + "model");
+
+        ResultBean resultBean = FreeMarkerUtil.getResultBean(JDBC_DRIVER, JDBC_URL, NAME, PASSWORD, "t_role");
+
+        testMain.generateController(root, cfg, "role", filePath);
+        testMain.generateApiController(root, cfg, "role", filePath + "api");
+        testMain.generateService(root, cfg, "role", filePath + "service");
+        testMain.generateServiceImpl(root, cfg, "role", filePath + "service/impl", "用户已经被使用了");
+        testMain.generateModel(root, cfg, "role", filePath + "model", resultBean);
+        testMain.generateMapper(root, cfg, "role", filePath + "mapper");
+        testMain.generateMapperXml(root, cfg, "role", filePath + "mapper/xml", resultBean, "t_role");
+        testMain.generateJs(root, cfg, "role", filePath + "jsp/js");
+        testMain.generateJsp(root, cfg, "role", filePath + "jsp");
     }
 
     //生成controller模板
@@ -48,16 +56,11 @@ public class TestMain {
     }
 
     //生成bean模板
-    public void generateModel(Map<String, Object> root, Configuration configuration, String tagertStr, String filePath) throws Exception {
-        final String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/my_shop?autoReconnect=true&useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true";
-        final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-        final String NAME = "root";
-        final String PASSWORD = "111111";
-        List<Attribute> attrList = getAttributeList(JDBC_DRIVER, JDBC_URL, NAME, PASSWORD, "t_user");
+    public void generateModel(Map<String, Object> root, Configuration configuration, String tagertStr, String filePath, ResultBean resultBean) throws Exception {
         Template temp = configuration.getTemplate("/model.ftl");
         root.put("packageName", "com.cn.model");
         root.put("className", returnUppercase(tagertStr));
-        root.put("attrs", attrList);
+        root.put("attrs", resultBean.getAttributeList());
         printResources(root, temp, tagertStr, filePath);
     }
 
@@ -89,6 +92,47 @@ public class TestMain {
         printResources(root, temp, tagertStr, filePath);
     }
 
+    //生成mapper 模板
+    public void generateMapper(Map<String, Object> root, Configuration configuration, String tagertStr, String filePath) throws Exception {
+        Template temp = configuration.getTemplate("/mapper.ftl");
+        root.put("upBeanName", returnUppercase(tagertStr));
+        root.put("packageName", "com.cn.mapper");
+        root.put("beanName", tagertStr);
+        root.put("model_packageName", "com.cn.model");
+        printResources(root, temp, tagertStr, filePath);
+    }
+
+    //生成mapper.xml模板
+    public void generateMapperXml(Map<String, Object> root, Configuration configuration, String tagertStr, String filePath, ResultBean resultBean, String tableName) throws Exception {
+        Template temp = configuration.getTemplate("/mapperXml.ftl");
+        root.put("mapper_packageName", "com.cn.mapper");
+        root.put("upBeanName", returnUppercase(tagertStr));
+        root.put("model_packageName", "com.cn.model");
+        root.put("attrs", resultBean.getXmlAssistBeanList());
+        root.put("baseColumList", SqlAssistBean.getSqlMap(resultBean.getXmlAssistBeanList(), tableName).get("baseColumList").toString());
+        root.put("selectByPrimaryKey", SqlAssistBean.getSqlMap(resultBean.getXmlAssistBeanList(), tableName).get("selectByPrimaryKey").toString());
+        root.put("deleteByPrimaryKey", SqlAssistBean.getSqlMap(resultBean.getXmlAssistBeanList(), tableName).get("deleteByPrimaryKey").toString());
+        root.put("insert", SqlAssistBean.getSqlMap(resultBean.getXmlAssistBeanList(), tableName).get("insert").toString());
+        root.put("insertSelective", SqlAssistBean.getSqlMap(resultBean.getXmlAssistBeanList(), tableName).get("insertSelective").toString());
+        root.put("updateByPrimaryKeySelective", SqlAssistBean.getSqlMap(resultBean.getXmlAssistBeanList(), tableName).get("updateByPrimaryKeySelective").toString());
+        root.put("table_name", tableName);
+        root.put("xmlAssistBean", resultBean.getXmlAssistBeanList().get(0));
+        printResources(root, temp, tagertStr, filePath);
+    }
+
+    //生成jsp模板
+    public void generateJsp(Map<String, Object> root, Configuration configuration, String tagertStr, String filePath) throws Exception {
+        Template temp = configuration.getTemplate("/jsp.ftl");
+        root.put("beanName", tagertStr);
+        printResources(root, temp, tagertStr, filePath);
+    }
+
+    //生成js模板
+    public void generateJs(Map<String, Object> root, Configuration configuration, String tagertStr, String filePath) throws Exception {
+        Template temp = configuration.getTemplate("/js.ftl");
+        root.put("beanName", tagertStr);
+        printResources(root, temp, tagertStr, filePath);
+    }
     //替换第一个字母为大写
     private String returnUppercase(String str) {
         char c = str.charAt(0);
@@ -106,14 +150,22 @@ public class TestMain {
             dir.mkdirs();
         }
         try {
-            if (filePath.lastIndexOf("api") > -1) {
+            if (filePath.endsWith("api")) {
                 fos = new FileOutputStream(new File(dir, returnUppercase(tagertStr) + "ApiController.java"));
-            } else if (filePath.lastIndexOf("impl") > -1) {
+            } else if (filePath.endsWith("impl")) {
                 fos = new FileOutputStream(new File(dir, returnUppercase(tagertStr) + "ServiceImpl.java"));
-            } else if (filePath.lastIndexOf("service") > -1) {
+            } else if (filePath.endsWith("service")) {
                 fos = new FileOutputStream(new File(dir, returnUppercase(tagertStr) + "Service.java"));
-            } else if (filePath.lastIndexOf("model") > -1) {
+            } else if (filePath.endsWith("model")) {
                 fos = new FileOutputStream(new File(dir, returnUppercase(tagertStr) + ".java"));
+            } else if (filePath.endsWith("xml")) {
+                fos = new FileOutputStream(new File(dir, returnUppercase(tagertStr) + "Mapper.xml"));
+            } else if (filePath.endsWith("mapper")) {
+                fos = new FileOutputStream(new File(dir, returnUppercase(tagertStr) + "Mapper.java"));
+            } else if (filePath.endsWith("js")) {
+                fos = new FileOutputStream(new File(dir, returnUppercase(tagertStr) + ".js"));
+            } else if (filePath.endsWith("jsp")) {
+                fos = new FileOutputStream(new File(dir, returnUppercase(tagertStr) + ".jsp"));
             } else {
                 fos = new FileOutputStream(new File(dir, returnUppercase(tagertStr) + "Controller.java"));
             }
@@ -125,59 +177,5 @@ public class TestMain {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }
-
-    //从数据库获取表字段
-    public List<javax.management.Attribute> getAttributeList(String driverName, String jdbcUrl, String name, String passWord, String tableName) throws Exception {
-        List<Attribute> attrList = new ArrayList<Attribute>();
-        Class.forName(driverName);
-        Connection connection = DriverManager.getConnection(jdbcUrl, name, passWord);
-        String sql = "select * from " + tableName;
-        PreparedStatement stmt;
-        try {
-            stmt = connection.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery(sql);
-            ResultSetMetaData data = rs.getMetaData();
-            while (rs.next()) {
-                if (attrList.size() != data.getColumnCount()) {
-                    for (int i = 1; i <= data.getColumnCount(); i++) {
-                        attrList.add(new javax.management.Attribute(formatSqlColumName(data.getColumnName(i)), formatSqlColumType(data.getColumnTypeName(i))));
-                    }
-                }
-            }
-            return attrList;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    private String formatSqlColumName(String str) {
-        StringBuilder sb = new StringBuilder();
-        if (str.indexOf("_") > -1) {
-            sb.append(StrUtil.columnToProperty(str));
-        } else {
-            sb.append(str);
-        }
-        return sb.toString();
-    }
-
-    private String formatSqlColumType(String str) {
-        String ms = "";
-        switch (str) {
-            case "INT":
-                ms = "Integer";
-                break;
-            case "VARCHAR":
-                ms = "String";
-                break;
-            case "DATETIME":
-                ms = "Date";
-                break;
-            default:
-                ms = "";
-                break;
-        }
-        return ms;
     }
 }

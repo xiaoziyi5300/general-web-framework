@@ -1,7 +1,9 @@
 package com.cn.liu.serviceImpl;
 
+import com.cn.liu.base.PageBean;
 import com.cn.liu.base.PageReponseBean;
 import com.cn.liu.base.PageRequestBean;
+import com.cn.liu.base.PageRequstParams;
 import com.cn.liu.dto.Product;
 import com.cn.liu.exception.BusinessException;
 import com.cn.liu.mapper.ProductMapper;
@@ -52,12 +54,13 @@ public class ProductImpl implements ProductService {
     }
 
     @Override
-    public PageReponseBean<Product> queryListByPage(PageRequestBean pageRequestBean) {
-        PageHelper.startPage(pageRequestBean.getPage(), pageRequestBean.getRows());
+    public PageBean<Product> queryListByPage(PageRequstParams pageRequstParams) {
+        PageHelper.startPage(pageRequstParams.getPage(), pageRequstParams.getRows());
         List<ProductModel> productModelList = productMapper.selectByList();
-        PageReponseBean<Product> pageReponseBean = new PageReponseBean(pageRequestBean.getPage(), pageRequestBean.getRows(), dataTotalCount());
-        pageReponseBean.setList(BeanUtil.mapper(productModelList, Product.class));
-        return pageReponseBean;
+        PageBean pageBean = new PageBean();
+        pageBean.setTotal(dataTotalCount());
+        pageBean.setRows(BeanUtil.mapper(productModelList, Product.class));
+        return pageBean;
     }
 
     public int dataTotalCount() {
